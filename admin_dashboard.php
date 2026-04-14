@@ -68,11 +68,6 @@ session_start();
                 <h1 id="pageTitle">Dashboard</h1>
                 <p id="pageSubtitle">Welcome back, <span id="adminName">Admin</span></p>
             </div>
-            <div class="header-right">
-                <div class="notification-bell">
-                    <span>🔔</span>
-                    <span class="badge">3</span>
-                </div>
                 <div class="admin-profile">
                     <div class="profile-avatar" id="adminAvatar">AD</div>
                     <div class="profile-info">
