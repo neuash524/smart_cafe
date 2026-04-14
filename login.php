@@ -130,14 +130,10 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type']) && $_SESSION['u
             padding: 2rem 1.5rem;
         }
         
-        /* Phone input number only styling */
-        #su-phone::-webkit-inner-spin-button, 
-        #su-phone::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+        /* Phone input styling */
         #su-phone {
-            -moz-appearance: textfield;
+            font-family: 'Lato', monospace;
+            letter-spacing: 0.5px;
         }
         .phone-hint {
             font-size: 0.75rem;
@@ -149,6 +145,13 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type']) && $_SESSION['u
             font-size: 0.75rem;
             margin-top: 0.25rem;
             display: block;
+        }
+        .phone-example {
+            font-family: monospace;
+            background: #f5f0ea;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
         }
         
         @keyframes modalSlideIn {
@@ -232,13 +235,15 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type']) && $_SESSION['u
                 </div>
                 <div class="form-group">
                     <label for="su-phone">Phone Number</label>
-                    <input type="tel" id="su-phone" required placeholder="1234567890" 
+                    <input type="tel" id="su-phone" required placeholder="+1234567890" 
                            autocomplete="tel" 
                            oninput="validatePhoneNumber(this)"
-                           pattern="[0-9]*"
-                           inputmode="numeric"
-                           maxlength="15">
-                    <span class="phone-hint">📱 Numbers only (max 15 digits)</span>
+                           pattern="^\+?[0-9]{8,15}$"
+                           inputmode="tel"
+                           maxlength="16">
+                    <span class="phone-hint">
+                        📱 Format: <span class="phone-example">+1234567890</span> (plus sign + 8-15 digits)
+                    </span>
                 </div>
                 <div class="form-group">
                     <label for="su-pass">Password</label>
@@ -345,20 +350,53 @@ function setBtn(id, loading, label) {
     b.textContent = loading ? 'Please wait...' : label;
 }
 
-// ── PHONE NUMBER VALIDATION - Only Numbers ─────────────────────
+// ── PHONE NUMBER VALIDATION - Accepts + followed by digits ─────
 function validatePhoneNumber(input) {
-    // Remove any non-digit characters
     let value = input.value;
-    let numbersOnly = value.replace(/\D/g, '');
     
-    // Update the input value with only numbers
-    input.value = numbersOnly;
+    // Check if the value starts with + (optional)
+    // Allow only + followed by digits
+    let isValid = true;
+    let cleaned = '';
     
-    // Optional: Add visual feedback if invalid characters were removed
-    if (value !== numbersOnly && value !== '') {
-        showPhoneValidationFeedback('Only numbers are allowed', 'warning');
-    } else if (numbersOnly.length > 0) {
-        // Clear any previous error when valid
+    if (value.length === 0) {
+        input.value = '';
+        return;
+    }
+    
+    // Check if first character is '+'
+    if (value[0] === '+') {
+        cleaned = '+';
+        // Add only digits after the '+'
+        for (let i = 1; i < value.length; i++) {
+            if (value[i] >= '0' && value[i] <= '9') {
+                cleaned += value[i];
+            } else {
+                isValid = false;
+            }
+        }
+    } else {
+        // If no '+', just allow digits
+        for (let i = 0; i < value.length; i++) {
+            if (value[i] >= '0' && value[i] <= '9') {
+                cleaned += value[i];
+            } else {
+                isValid = false;
+            }
+        }
+    }
+    
+    // Update input value with cleaned version
+    if (input.value !== cleaned) {
+        input.value = cleaned;
+    }
+    
+    // Show feedback if invalid characters were removed
+    if (!isValid && value !== '') {
+        showPhoneValidationFeedback('Only + and numbers allowed (e.g., +1234567890)', 'warning');
+    } else if (cleaned.length > 1 && cleaned.length < 9) {
+        showPhoneValidationFeedback('Phone number must have at least 8 digits after +', 'warning');
+    } else {
         clearPhoneValidationFeedback();
     }
 }
@@ -505,20 +543,16 @@ function handleSignup(e) {
     if (!firstName || !lastName) { showToast('Please enter your full name.', 'error'); return; }
     if (!email)                  { showToast('Please enter your email address.', 'error'); return; }
     
-    // Phone validation - must contain only numbers
+    // Phone validation - must start with + followed by digits
     if (!phone) {
         showToast('Please enter your phone number.', 'error');
         return;
     }
     
-    // Check if phone contains only digits
-    if (!/^\d+$/.test(phone)) {
-        showToast('Phone number must contain only digits (0-9).', 'error');
-        return;
-    }
-    
-    if (phone.length < 8) {
-        showToast('Phone number must be at least 8 digits.', 'error');
+    // Check phone format: must be + followed by digits only, total length 9-16 characters (including +)
+    const phoneRegex = /^\+[0-9]{8,15}$/;
+    if (!phoneRegex.test(phone)) {
+        showToast('Phone number must start with + followed by 8-15 digits (e.g., +1234567890)', 'error');
         return;
     }
     
