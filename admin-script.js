@@ -977,7 +977,7 @@ function filterOrders(filter, btn) {
 
 // Start orders polling for real-time updates
 function startOrdersPolling() {
-    // Refresh orders every 10 seconds to keep admin dashboard updated
+    // Refresh orders every 15 seconds to keep admin dashboard updated
     setInterval(async () => {
         try {
             const response = await fetch('orders.php');
@@ -996,7 +996,7 @@ function startOrdersPolling() {
         } catch (error) {
             console.error('[Admin] Error auto-refreshing orders:', error);
         }
-    }, 10000); // Refresh every 10 seconds
+    }, 10000); // Refresh every 15 seconds
 }
 
 // ══════════════════════════════════════════════════════════════

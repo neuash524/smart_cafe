@@ -30,12 +30,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type']) && $_SESSION['u
         .login-logo { display:flex; justify-content:center; margin-bottom:1rem; }
         h1.login-title { font-family:'Playfair Display',serif; font-size:1.85rem; color:#8B4513; margin-bottom:.3rem; }
         p.login-subtitle { color:#999; font-size:.92rem; }
-        .login-tabs { display:flex; gap:.35rem; margin-bottom:2rem; background:#f7f0e8; padding:.35rem; border-radius:10px; }
-        .login-tab { flex:1; padding:.6rem .4rem; border:none; background:transparent; border-radius:8px; cursor:pointer; font-weight:700; font-size:.85rem; color:#a08060; transition:all .2s; font-family:'Lato',sans-serif; }
-        .login-tab.active { background:#fff; color:#8B4513; box-shadow:0 2px 8px rgba(139,69,19,.12); }
-        .login-tab:hover:not(.active) { color:#8B4513; }
-        .login-form { display:none; }
-        .login-form.active { display:block; animation:fadeIn .25s ease; }
+        .login-form { display:block; }
         .form-group { margin-bottom:1.1rem; }
         .form-group label { display:block; margin-bottom:.35rem; font-weight:700; color:#4a3520; font-size:.88rem; }
         .form-group input { width:100%; padding:.75rem 1rem; border:2px solid #e8d5c0; border-radius:8px; font-size:.95rem; font-family:'Lato',sans-serif; transition:border-color .2s; color:#2d1f0e; background:#fff; }
@@ -67,6 +62,105 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type']) && $_SESSION['u
         .toast.success { background:#d1fae5; color:#065f46; border-left:4px solid #10b981; }
         .toast.error { background:#fee2e2; color:#991b1b; border-left:4px solid #ef4444; }
         .toast.warning { background:#fef3c7; color:#92400e; border-left:4px solid #f59e0b; }
+        
+        /* Sign Up Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .signup-modal {
+            background: #fff;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.4s ease;
+        }
+        .signup-modal-header {
+            padding: 1.5rem;
+            border-bottom: 2px solid #f0e6dc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            border-radius: 20px 20px 0 0;
+        }
+        .signup-modal-header h2 {
+            color: #8B4513;
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #9b8070;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            color: #8B4513;
+            transform: scale(1.1);
+        }
+        .signup-modal-body {
+            padding: 2rem 1.5rem;
+        }
+        
+        /* Phone input number only styling */
+        #su-phone::-webkit-inner-spin-button, 
+        #su-phone::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        #su-phone {
+            -moz-appearance: textfield;
+        }
+        .phone-hint {
+            font-size: 0.75rem;
+            color: #9b8070;
+            display: block;
+            margin-top: 0.25rem;
+        }
+        .phone-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: block;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         @keyframes fadeInUp { from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)} }
         @keyframes fadeIn { from{opacity:0}to{opacity:1} }
         @keyframes slideIn { from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)} }
@@ -85,17 +179,12 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type']) && $_SESSION['u
           <circle cx="20" cy="20" r="6" fill="#D4A574"/>
         </svg>
       </div>
-      <h1 class="login-title" id="pageTitle">Customer Login</h1>
-      <p class="login-subtitle" id="pageSubtitle">Login to reserve tables, order food and more</p>
+      <h1 class="login-title">Customer Login</h1>
+      <p class="login-subtitle">Login to reserve tables, order food and more</p>
     </div>
 
-    <div class="login-tabs">
-      <button class="login-tab active" id="tab-customer" onclick="switchTab('customer')">Login</button>
-      <button class="login-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
-    </div>
-
-    <!-- CUSTOMER LOGIN -->
-    <form id="customerLogin" class="login-form active" onsubmit="handleCustomerLogin(event)">
+    <!-- CUSTOMER LOGIN (Only visible form) -->
+    <form id="customerLogin" class="login-form" onsubmit="handleCustomerLogin(event)">
       <div class="form-group">
         <label for="cust-email">Email Address</label>
         <input type="email" id="cust-email" required placeholder="your.email@example.com" autocomplete="email">
@@ -108,51 +197,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type']) && $_SESSION['u
       <button type="submit" class="btn-login" id="custLoginBtn">Login to My Account</button>
       <div class="switch-link">
         Don't have an account?
-        <button type="button" onclick="switchTab('signup')">Sign up free</button>
-      </div>
-    </form>
-
-    <!-- SIGN UP -->
-    <form id="signupForm" class="login-form" onsubmit="handleSignup(event)">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="su-first">First Name</label>
-          <input type="text" id="su-first" required placeholder="Aashish" autocomplete="given-name">
-        </div>
-        <div class="form-group">
-          <label for="su-last">Last Name</label>
-          <input type="text" id="su-last" required placeholder="Neupane" autocomplete="family-name">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="su-email">Email Address</label>
-        <input type="email" id="su-email" required placeholder="your.email@example.com"
-               autocomplete="email" oninput="liveEmailCheck(this.value)">
-        <span class="email-status" id="emailStatus"></span>
-      </div>
-      <div class="form-group">
-        <label for="su-phone">Phone Number</label>
-        <input type="tel" id="su-phone" required placeholder="+1 234 567 8900" autocomplete="tel">
-      </div>
-      <div class="form-group">
-        <label for="su-pass">Password</label>
-        <input type="password" id="su-pass" required placeholder="Minimum 6 characters"
-               oninput="updateStrength(this.value)" autocomplete="new-password">
-        <div class="strength-bar-wrap"><div class="strength-bar" id="strengthBar"></div></div>
-        <span class="strength-text" id="strengthText"></span>
-      </div>
-      <div class="form-group">
-        <label for="su-confirm">Confirm Password</label>
-        <input type="password" id="su-confirm" required placeholder="Repeat password" autocomplete="new-password">
-      </div>
-      <div class="terms-row">
-        <input type="checkbox" id="su-terms" required>
-        <label for="su-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
-      </div>
-      <button type="submit" class="btn-login" id="signupBtn">Create My Account</button>
-      <div class="switch-link">
-        Already have an account?
-        <button type="button" onclick="switchTab('customer')">Login here</button>
+        <button type="button" onclick="openSignupModal()">Sign up free</button>
       </div>
     </form>
 
@@ -160,7 +205,62 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_type']) && $_SESSION['u
   </div>
 </div>
 
-<!-- cafe-data.js MUST load first -->
+<!-- Sign Up Modal -->
+<div id="signupModal" class="modal-overlay">
+    <div class="signup-modal">
+        <div class="signup-modal-header">
+            <h2>Create Account</h2>
+            <button class="modal-close" onclick="closeSignupModal()">&times;</button>
+        </div>
+        <div class="signup-modal-body">
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="su-first">First Name</label>
+                        <input type="text" id="su-first" required placeholder="Aashish" autocomplete="given-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="su-last">Last Name</label>
+                        <input type="text" id="su-last" required placeholder="Neupane" autocomplete="family-name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="su-email">Email Address</label>
+                    <input type="email" id="su-email" required placeholder="your.email@example.com"
+                           autocomplete="email" oninput="liveEmailCheck(this.value)">
+                    <span class="email-status" id="emailStatus"></span>
+                </div>
+                <div class="form-group">
+                    <label for="su-phone">Phone Number</label>
+                    <input type="tel" id="su-phone" required placeholder="1234567890" 
+                           autocomplete="tel" 
+                           oninput="validatePhoneNumber(this)"
+                           pattern="[0-9]*"
+                           inputmode="numeric"
+                           maxlength="15">
+                    <span class="phone-hint">📱 Numbers only (max 15 digits)</span>
+                </div>
+                <div class="form-group">
+                    <label for="su-pass">Password</label>
+                    <input type="password" id="su-pass" required placeholder="Minimum 6 characters"
+                           oninput="updateStrength(this.value)" autocomplete="new-password">
+                    <div class="strength-bar-wrap"><div class="strength-bar" id="strengthBar"></div></div>
+                    <span class="strength-text" id="strengthText"></span>
+                </div>
+                <div class="form-group">
+                    <label for="su-confirm">Confirm Password</label>
+                    <input type="password" id="su-confirm" required placeholder="Repeat password" autocomplete="new-password">
+                </div>
+                <div class="terms-row">
+                    <input type="checkbox" id="su-terms" required>
+                    <label for="su-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                </div>
+                <button type="submit" class="btn-login" id="signupBtn">Create My Account</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="cafe-data.js"></script>
 <script>
 
@@ -179,39 +279,60 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = 'admin-login.php';
         return;
     }
+});
 
-    // Open signup tab if URL has ?tab=signup
-    if (new URLSearchParams(location.search).get('tab') === 'signup') {
-        switchTab('signup');
+// ── Sign Up Modal Functions ─────────────────────────────────────
+function openSignupModal() {
+    const modal = document.getElementById('signupModal');
+    modal.classList.add('active');
+    // Reset form when opening
+    const form = document.getElementById('signupForm');
+    if (form) form.reset();
+    // Clear email status
+    const emailStatus = document.getElementById('emailStatus');
+    if (emailStatus) emailStatus.textContent = '';
+    // Reset strength meter
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthText = document.getElementById('strengthText');
+    if (strengthBar) strengthBar.style.width = '0';
+    if (strengthText) strengthText.textContent = '';
+    // Clear phone validation feedback
+    clearPhoneValidationFeedback();
+}
+
+function closeSignupModal() {
+    const modal = document.getElementById('signupModal');
+    modal.classList.remove('active');
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('signupModal');
+    if (e.target === modal) {
+        closeSignupModal();
     }
 });
 
-// ── Tab switcher ─────────────────────────────────────────────
-var TABS = {
-    customer: { title: 'Customer Login', sub: 'Login to reserve tables, order food and more' },
-    signup:   { title: 'Create Account', sub: 'Join Smart Cafe and start ordering today' }
-};
-
-function switchTab(tab) {
-    document.querySelectorAll('.login-tab').forEach(function (t) { t.classList.remove('active'); });
-    document.getElementById('tab-' + tab).classList.add('active');
-    document.querySelectorAll('.login-form').forEach(function (f) { f.classList.remove('active'); });
-    var ids = { customer: 'customerLogin', signup: 'signupForm' };
-    document.getElementById(ids[tab]).classList.add('active');
-    document.getElementById('pageTitle').textContent    = TABS[tab].title;
-    document.getElementById('pageSubtitle').textContent = TABS[tab].sub;
-}
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('signupModal');
+        if (modal.classList.contains('active')) {
+            closeSignupModal();
+        }
+    }
+});
 
 // ── Toast notification ───────────────────────────────────────
 function showToast(msg, type) {
     document.querySelectorAll('.toast').forEach(function (t) { t.remove(); });
-    var t      = document.createElement('div');
-    t.className   = 'toast ' + (type || 'info');
+    var t = document.createElement('div');
+    t.className = 'toast ' + (type || 'info');
     t.textContent = msg;
     document.body.appendChild(t);
     setTimeout(function () {
         t.style.transition = 'opacity 0.4s';
-        t.style.opacity    = '0';
+        t.style.opacity = '0';
         setTimeout(function () { t.remove(); }, 400);
     }, 3500);
 }
@@ -220,8 +341,53 @@ function showToast(msg, type) {
 function setBtn(id, loading, label) {
     var b = document.getElementById(id);
     if (!b) return;
-    b.disabled    = loading;
+    b.disabled = loading;
     b.textContent = loading ? 'Please wait...' : label;
+}
+
+// ── PHONE NUMBER VALIDATION - Only Numbers ─────────────────────
+function validatePhoneNumber(input) {
+    // Remove any non-digit characters
+    let value = input.value;
+    let numbersOnly = value.replace(/\D/g, '');
+    
+    // Update the input value with only numbers
+    input.value = numbersOnly;
+    
+    // Optional: Add visual feedback if invalid characters were removed
+    if (value !== numbersOnly && value !== '') {
+        showPhoneValidationFeedback('Only numbers are allowed', 'warning');
+    } else if (numbersOnly.length > 0) {
+        // Clear any previous error when valid
+        clearPhoneValidationFeedback();
+    }
+}
+
+function showPhoneValidationFeedback(message, type) {
+    const phoneGroup = document.getElementById('su-phone').closest('.form-group');
+    let feedbackEl = phoneGroup.querySelector('.phone-feedback');
+    
+    if (!feedbackEl) {
+        feedbackEl = document.createElement('span');
+        feedbackEl.className = 'phone-feedback';
+        phoneGroup.appendChild(feedbackEl);
+    }
+    
+    feedbackEl.style.color = type === 'warning' ? '#f59e0b' : '#dc2626';
+    feedbackEl.innerHTML = type === 'warning' ? '⚠️ ' + message : '❌ ' + message;
+    
+    // Auto-hide after 3 seconds
+    setTimeout(() => {
+        if (feedbackEl && feedbackEl.parentNode) {
+            feedbackEl.remove();
+        }
+    }, 3000);
+}
+
+function clearPhoneValidationFeedback() {
+    const phoneGroup = document.getElementById('su-phone').closest('.form-group');
+    const feedbackEl = phoneGroup.querySelector('.phone-feedback');
+    if (feedbackEl) feedbackEl.remove();
 }
 
 // ── CUSTOMER LOGIN - BLOCKS ADMIN LOGIN ──────────────────────
@@ -324,7 +490,7 @@ function handleCustomerLogin(e) {
     });
 }
 
-// SIGN UP - Only creates customer accounts
+// SIGN UP - Only creates customer accounts with phone validation
 function handleSignup(e) {
     e.preventDefault();
 
@@ -338,7 +504,24 @@ function handleSignup(e) {
 
     if (!firstName || !lastName) { showToast('Please enter your full name.', 'error'); return; }
     if (!email)                  { showToast('Please enter your email address.', 'error'); return; }
-    if (!phone)                  { showToast('Please enter your phone number.', 'error'); return; }
+    
+    // Phone validation - must contain only numbers
+    if (!phone) {
+        showToast('Please enter your phone number.', 'error');
+        return;
+    }
+    
+    // Check if phone contains only digits
+    if (!/^\d+$/.test(phone)) {
+        showToast('Phone number must contain only digits (0-9).', 'error');
+        return;
+    }
+    
+    if (phone.length < 8) {
+        showToast('Phone number must be at least 8 digits.', 'error');
+        return;
+    }
+    
     if (pass.length < 6)         { showToast('Password must be at least 6 characters.', 'error'); return; }
     if (pass !== confirm)        { showToast('Passwords do not match.', 'error'); return; }
 
@@ -387,6 +570,7 @@ function handleSignup(e) {
             });
             
             showToast('Account created! Welcome, ' + dbUser.full_name + '!', 'success');
+            closeSignupModal();
             setTimeout(function () { window.location.href = 'customer_dashboard.php'; }, 1400);
         } else {
             // Fallback to localStorage
@@ -402,6 +586,7 @@ function handleSignup(e) {
                     user_type: 'customer'
                 });
                 showToast('Account created! Welcome, ' + result.user.full_name + '!', 'success');
+                closeSignupModal();
                 setTimeout(function () { window.location.href = 'customer_dashboard.php'; }, 1400);
             } else {
                 showToast(result.message, 'error');
@@ -423,6 +608,7 @@ function handleSignup(e) {
                 user_type: 'customer'
             });
             showToast('Account created! Welcome, ' + result.user.full_name + '!', 'success');
+            closeSignupModal();
             setTimeout(function () { window.location.href = 'customer_dashboard.php'; }, 1400);
         } else {
             showToast(result.message, 'error');
