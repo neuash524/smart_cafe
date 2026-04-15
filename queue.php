@@ -3,7 +3,7 @@
  * Smart Café API — queue.php
  * GET    : Fetch queue
  * POST   : Join queue
- * PATCH  : Update queue entry status (admin approval triggers notification)
+ * PATCH  : Update queue entry status (admin approval triggers notification + EMAIL)
  * DELETE : Remove from queue
  */
 
@@ -122,7 +122,7 @@ try {
         }
     }
     
-    // PATCH - Update queue status (ADMIN SEATING TRIGGERS NOTIFICATION)
+    // PATCH - Update queue status (ADMIN SEATING TRIGGERS NOTIFICATION + EMAIL)
     if ($method === 'PATCH') {
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         $b = json_decode(file_get_contents('php://input'), true);
@@ -136,7 +136,10 @@ try {
         $pdo->beginTransaction();
         
         try {
-            $entry = fetchOne('SELECT * FROM queue WHERE queue_id = ?', [$id]);
+            $entry = fetchOne('SELECT q.*, u.email as user_email, u.full_name as user_name 
+                               FROM queue q 
+                               LEFT JOIN users u ON q.user_id = u.user_id 
+                               WHERE q.queue_id = ?', [$id]);
             if (!$entry) {
                 sendResponse(false, 'Queue entry not found');
             }
@@ -148,21 +151,50 @@ try {
             $pdo->prepare("UPDATE queue SET status = ? $extra WHERE queue_id = ?")
                 ->execute([$status, $id]);
             
-            // SEND NOTIFICATION ONLY WHEN ADMIN SEATS THE CUSTOMER
-            if ($status === 'seated' && $hasUserIdColumn && isset($entry['user_id']) && $entry['user_id']) {
+            // ============================================================
+            // SEND EMAIL NOTIFICATION WHEN ADMIN SEATS THE CUSTOMER
+            // ============================================================
+            if ($status === 'seated' && $entry['user_email']) {
                 try {
+                    require_once __DIR__ . '/email_sender.php';
+                    
                     // Check if customer has a reservation for today
                     $reservation = fetchOne(
-                        'SELECT r.*, t.table_number FROM reservations r 
+                        'SELECT t.table_number FROM reservations r 
                          LEFT JOIN cafe_tables t ON r.table_id = t.table_id 
-                         WHERE r.user_id = ? AND r.reservation_date = CURDATE() AND r.status = "confirmed"',
+                         WHERE r.user_id = ? AND r.reservation_date = CURDATE() AND r.status = "confirmed" 
+                         LIMIT 1',
                         [$entry['user_id']]
                     );
                     
-                    $tableInfo = '';
-                    if ($reservation && $reservation['table_number']) {
-                        $tableInfo = " at your reserved table {$reservation['table_number']}";
-                    }
+                    sendQueueEmail(
+                        $entry['user_email'],
+                        $entry['customer_name'],
+                        $entry['position'],
+                        $entry['party_size'],
+                        $entry['estimated_wait_time'],
+                        'ready'
+                    );
+                    error_log("[Email] Queue ready notification sent to {$entry['user_email']}");
+                } catch (Exception $e) {
+                    error_log("[Email] Failed to send queue email: " . $e->getMessage());
+                }
+            }
+            
+            // ============================================================
+            // SEND IN-APP NOTIFICATION
+            // ============================================================
+            if ($status === 'seated' && $entry['user_id']) {
+                try {
+                    $reservation = fetchOne(
+                        'SELECT t.table_number FROM reservations r 
+                         LEFT JOIN cafe_tables t ON r.table_id = t.table_id 
+                         WHERE r.user_id = ? AND r.reservation_date = CURDATE() AND r.status = "confirmed" 
+                         LIMIT 1',
+                        [$entry['user_id']]
+                    );
+                    
+                    $tableInfo = $reservation ? " at your reserved table {$reservation['table_number']}" : "";
                     
                     $title = "✅ Your Table is Ready!";
                     $message = "{$entry['customer_name']}, your table is now ready{$tableInfo}. Please proceed to the host station.";
@@ -170,9 +202,9 @@ try {
                     $notifSql = 'INSERT INTO notifications (user_id, notification_type, title, message, is_read, created_at)
                                  VALUES (?, "queue", ?, ?, 0, NOW())';
                     $pdo->prepare($notifSql)->execute([$entry['user_id'], $title, $message]);
-                    error_log("[Queue] Seating notification sent to user {$entry['user_id']}");
+                    error_log("[Notification] Seating notification sent to user {$entry['user_id']}");
                 } catch (Exception $e) {
-                    error_log("[Queue] Failed to send seating notification: " . $e->getMessage());
+                    error_log("[Notification] Failed: " . $e->getMessage());
                 }
             }
             

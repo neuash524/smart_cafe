@@ -3,7 +3,7 @@
  * Smart Café API — reservations.php
  * GET    : Fetch reservations
  * POST   : Create reservation (pending by default)
- * PATCH  : Update reservation status (admin approval triggers notification)
+ * PATCH  : Update reservation status (admin approval triggers notification + EMAIL)
  * DELETE : Cancel reservation
  */
 
@@ -149,7 +149,7 @@ try {
         }
     }
     
-    // PATCH - Update reservation status (ADMIN APPROVAL TRIGGERS NOTIFICATION)
+    // PATCH - Update reservation status (ADMIN APPROVAL TRIGGERS NOTIFICATION + EMAIL)
     if ($method === 'PATCH') {
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         $b = json_decode(file_get_contents('php://input'), true);
@@ -163,7 +163,9 @@ try {
         $pdo->beginTransaction();
         
         try {
-            $reservation = fetchOne('SELECT * FROM reservations WHERE reservation_id = ?', [$id]);
+            $reservation = fetchOne('SELECT r.*, t.table_number FROM reservations r 
+                                     LEFT JOIN cafe_tables t ON r.table_id = t.table_id 
+                                     WHERE r.reservation_id = ?', [$id]);
             if (!$reservation) {
                 sendResponse(false, 'Reservation not found');
             }
@@ -184,23 +186,57 @@ try {
                 // Table already reserved from creation, keep it
             }
             
-            // SEND NOTIFICATION ONLY WHEN ADMIN APPROVES (status changes to confirmed or cancelled)
-            if (($status === 'confirmed' || $status === 'cancelled') && $reservation['user_id']) {
+            // ============================================================
+            // SEND EMAIL NOTIFICATION WHEN ADMIN APPROVES
+            // ============================================================
+            if (($status === 'confirmed' || $status === 'cancelled') && $reservation['customer_email']) {
                 try {
-                    $userCheck = fetchOne('SELECT user_id, email FROM users WHERE user_id = ?', [$reservation['user_id']]);
-                    if ($userCheck) {
-                        $title = $status === 'confirmed' ? "✅ Reservation Confirmed!" : "❌ Reservation Cancelled";
-                        $message = $status === 'confirmed' 
-                            ? "Your reservation for {$reservation['reservation_date']} at {$reservation['reservation_time']} has been confirmed by the admin."
-                            : "Your reservation for {$reservation['reservation_date']} at {$reservation['reservation_time']} has been cancelled by the admin.";
-                        
-                        $notifSql = 'INSERT INTO notifications (user_id, notification_type, title, message, is_read, created_at)
-                                     VALUES (?, "reservation", ?, ?, 0, NOW())';
-                        $pdo->prepare($notifSql)->execute([$reservation['user_id'], $title, $message]);
-                        error_log("[Reservation] Approval notification sent to user {$reservation['user_id']}");
+                    require_once __DIR__ . '/email_sender.php';
+                    
+                    if ($status === 'confirmed') {
+                        sendReservationEmail(
+                            $reservation['customer_email'],
+                            $reservation['customer_name'],
+                            $reservation['reservation_date'],
+                            $reservation['reservation_time'],
+                            $reservation['number_of_guests'],
+                            $reservation['table_number'] ?? 'Reserved Table',
+                            'confirmed'
+                        );
+                        error_log("[Email] Reservation confirmation sent to {$reservation['customer_email']}");
+                    } else if ($status === 'cancelled') {
+                        sendReservationEmail(
+                            $reservation['customer_email'],
+                            $reservation['customer_name'],
+                            $reservation['reservation_date'],
+                            $reservation['reservation_time'],
+                            $reservation['number_of_guests'],
+                            $reservation['table_number'] ?? 'Reserved Table',
+                            'cancelled'
+                        );
+                        error_log("[Email] Reservation cancellation sent to {$reservation['customer_email']}");
                     }
                 } catch (Exception $e) {
-                    error_log("[Reservation] Failed to send approval notification: " . $e->getMessage());
+                    error_log("[Email] Failed to send reservation email: " . $e->getMessage());
+                }
+            }
+            
+            // ============================================================
+            // SEND IN-APP NOTIFICATION
+            // ============================================================
+            if (($status === 'confirmed' || $status === 'cancelled') && $reservation['user_id']) {
+                try {
+                    $title = $status === 'confirmed' ? "✅ Reservation Confirmed!" : "❌ Reservation Cancelled";
+                    $message = $status === 'confirmed' 
+                        ? "Your reservation for {$reservation['reservation_date']} at {$reservation['reservation_time']} has been confirmed by the admin."
+                        : "Your reservation for {$reservation['reservation_date']} at {$reservation['reservation_time']} has been cancelled by the admin.";
+                    
+                    $notifSql = 'INSERT INTO notifications (user_id, notification_type, title, message, is_read, created_at)
+                                 VALUES (?, "reservation", ?, ?, 0, NOW())';
+                    $pdo->prepare($notifSql)->execute([$reservation['user_id'], $title, $message]);
+                    error_log("[Notification] Reservation update sent to user {$reservation['user_id']}");
+                } catch (Exception $e) {
+                    error_log("[Notification] Failed: " . $e->getMessage());
                 }
             }
             
