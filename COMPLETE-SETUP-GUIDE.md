@@ -25,6 +25,10 @@ Your complete Smart Café system is ready with ALL code files:
 smart-cafe/
 
 smart-cafe/
+ src/
+│   ├── PHPMailer.php
+│   ├── SMTP.php
+│   └── Exception.php
 │
 ├── customer_dashboard.php    ✅ (add PHP header)
 ├── admin_dashboard.php       ✅
@@ -50,8 +54,7 @@ smart-cafe/
 ├── register.php              ✅
 ├── notifications_api.php     ✅
 ├── users_api.php             ✅
-├── email_sender.php          ⚠️ (fix links)
-├── email_trigger.php         ✅
+├── email_sender.php          ⚠️ (fix links)       ✅
 ├── test_connection.php       ✅
 │
 └── img/

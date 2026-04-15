@@ -1,8 +1,12 @@
 <?php
 /**
- * Smart Café Email Sender - WORKING WITH GMAIL SMTP
- * Uses PHPMailer to send real emails
+ * Smart Café Email Sender - FULL WORKING VERSION
+ * Uses PHPMailer with Gmail SMTP to send real emails
  */
+
+// Enable error reporting for debugging (disable in production)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 require_once __DIR__ . '/src/PHPMailer.php';
 require_once __DIR__ . '/src/SMTP.php';
@@ -19,13 +23,13 @@ define('SITE_URL', 'http://localhost/smart-cafe');
 define('EMAIL_LOG_FILE', __DIR__ . '/email_log.txt');
 
 // ============================================================
-// GMAIL SMTP CONFIGURATION - UPDATE THESE VALUES!
+// GMAIL SMTP CONFIGURATION - YOUR CREDENTIALS
 // ============================================================
 define('SMTP_HOST', 'smtp.gmail.com');
 define('SMTP_PORT', 587);
-define('SMTP_USER', 'your-email@gmail.com');      // <-- YOUR GMAIL
-define('SMTP_PASS', 'your-app-password');         // <-- GMAIL APP PASSWORD (not your login pass)
-define('SMTP_FROM_EMAIL', 'your-email@gmail.com');
+define('SMTP_USER', 'neupaneaash@gmail.com');      // YOUR GMAIL
+define('SMTP_PASS', 'wbtd elie qkhv flsw');        // YOUR APP PASSWORD
+define('SMTP_FROM_EMAIL', 'neupaneaash@gmail.com');
 define('SMTP_FROM_NAME', 'Smart Café');
 
 /**
@@ -91,7 +95,7 @@ function logEmailToFile($to, $subject, $message, $status) {
     $logEntry .= "Status: {$status}\n";
     $logEntry .= "To: {$to}\n";
     $logEntry .= "Subject: {$subject}\n";
-    $logEntry .= "Message Preview: " . substr(strip_tags($message), 0, 200) . "\n";
+    $logEntry .= "Message Preview: " . substr(strip_tags($message), 0, 300) . "\n";
     $logEntry .= "========================================\n\n";
     
     file_put_contents(EMAIL_LOG_FILE, $logEntry, FILE_APPEND);
