@@ -137,6 +137,7 @@ function escapeHtml(str) {
 }
 
 // Helper function to trigger email notifications
+// Replace the triggerEmail function in admin-script.js
 function triggerEmail(type, id, status, extraData = {}) {
     // Silent trigger - doesn't block the main action
     const url = `email_trigger.php?type=${type}&id=${id}&status=${status}`;
@@ -144,11 +145,19 @@ function triggerEmail(type, id, status, extraData = {}) {
     fetch(url, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
-    }).catch(err => {
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log(`[Email] Triggered: ${type} #${id} -> ${status}`);
+        } else {
+            console.log(`[Email] Trigger failed but non-critical:`, data.message);
+        }
+    })
+    .catch(err => {
+        // Don't show error to user - just log it
         console.log('[Email] Trigger failed (non-critical):', err);
     });
-    
-    console.log(`[Email] Triggered: ${type} #${id} -> ${status}`);
 }
 
 // ══════════════════════════════════════════════════════════════

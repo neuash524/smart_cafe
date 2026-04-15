@@ -2,8 +2,8 @@
 /**
  * Smart Café API — reservations.php
  * GET    : Fetch reservations
- * POST   : Create reservation (pending by default)
- * PATCH  : Update reservation status (admin approval triggers notification + EMAIL)
+ * POST   : Create reservation (pending approval)
+ * PATCH  : Update reservation status (ADMIN ACTION -> triggers email)
  * DELETE : Cancel reservation
  */
 
@@ -16,13 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(200); exit; }
 
 require_once 'config.php';
 
-// RESTful endpoints with proper HTTP methods
 $method = $_SERVER['REQUEST_METHOD'];
 
 try {
     $pdo = getDBConnection();
     
+    // ============================================================
     // GET - Fetch reservations
+    // ============================================================
     if ($method === 'GET') {
         $userId = $_GET['user_id'] ?? null;
         $date = $_GET['date'] ?? null;
@@ -53,7 +54,9 @@ try {
         sendResponse(true, 'OK', ['reservations' => $reservations]);
     }
     
-    // POST - Create reservation (always pending until admin approves)
+    // ============================================================
+    // POST - Create reservation (pending admin approval)
+    // ============================================================
     if ($method === 'POST') {
         $b = json_decode(file_get_contents('php://input'), true);
         
@@ -74,43 +77,21 @@ try {
         $pdo->beginTransaction();
         
         try {
-            // Check if table exists and is available
             $table = fetchOne('SELECT * FROM cafe_tables WHERE table_id = ?', [$tableId]);
-            if (!$table) {
-                sendResponse(false, 'Table not found');
-            }
-            
-            if ($table['status'] !== 'available') {
-                sendResponse(false, 'Table is not available');
+            if (!$table || $table['status'] !== 'available') {
+                sendResponse(false, 'Table not available');
             }
             
             if ($guests > $table['capacity']) {
                 sendResponse(false, "Table only seats {$table['capacity']} guests");
             }
             
-            // Verify user exists in database if user_id is provided
             $validUserId = null;
             if ($userId !== null) {
-                $userCheck = fetchOne('SELECT user_id, full_name FROM users WHERE user_id = ? AND is_active = 1', [$userId]);
-                if ($userCheck) {
-                    $validUserId = $userId;
-                    $customerName = $userCheck['full_name'];
-                }
+                $userCheck = fetchOne('SELECT user_id FROM users WHERE user_id = ?', [$userId]);
+                if ($userCheck) $validUserId = $userId;
             }
             
-            // Check for double booking
-            $existing = fetchOne(
-                'SELECT reservation_id FROM reservations 
-                 WHERE table_id = ? AND reservation_date = ? AND reservation_time = ? 
-                 AND status IN ("pending", "confirmed")',
-                [$tableId, $reservationDate, $reservationTime]
-            );
-            
-            if ($existing) {
-                sendResponse(false, 'This table is already booked for that time');
-            }
-            
-            // Create reservation with status 'pending' (waiting for admin approval)
             $sql = 'INSERT INTO reservations 
                     (user_id, customer_name, customer_email, customer_phone, table_id, 
                      reservation_date, reservation_time, number_of_guests, special_requests, status)
@@ -120,36 +101,25 @@ try {
                            $reservationDate, $reservationTime, $guests, $specialRequests]);
             $reservationId = $pdo->lastInsertId();
             
-            // Mark table as reserved
-            $pdo->prepare('UPDATE cafe_tables SET status = "reserved" WHERE table_id = ?')
-                ->execute([$tableId]);
-            
-            // NO notification sent to customer here - wait for admin approval
-            
-            // Log activity
-            logActivity($validUserId, 'CREATE', 'reservations', $reservationId, 
-                       "Reservation request created for {$customerName} on {$reservationDate} at {$reservationTime} (pending approval)");
+            $pdo->prepare('UPDATE cafe_tables SET status = "reserved" WHERE table_id = ?')->execute([$tableId]);
             
             $pdo->commit();
             
-            // Get the created reservation with table number
-            $reservation = fetchOne(
-                'SELECT r.*, t.table_number FROM reservations r 
-                 LEFT JOIN cafe_tables t ON r.table_id = t.table_id 
-                 WHERE r.reservation_id = ?',
-                [$reservationId]
-            );
+            $reservation = fetchOne('SELECT r.*, t.table_number FROM reservations r 
+                                     LEFT JOIN cafe_tables t ON r.table_id = t.table_id 
+                                     WHERE r.reservation_id = ?', [$reservationId]);
             
-            sendResponse(true, "Reservation request submitted! Waiting for admin approval.", ['reservation' => $reservation]);
+            sendResponse(true, "Reservation request submitted! Awaiting admin approval.", ['reservation' => $reservation]);
             
         } catch (Exception $e) {
             $pdo->rollBack();
-            error_log("[Reservation] Error: " . $e->getMessage());
             sendResponse(false, 'Failed to create reservation: ' . $e->getMessage());
         }
     }
     
-    // PATCH - Update reservation status (ADMIN APPROVAL TRIGGERS NOTIFICATION + EMAIL)
+    // ============================================================
+    // PATCH - Update reservation status (TRIGGERS EMAIL)
+    // ============================================================
     if ($method === 'PATCH') {
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         $b = json_decode(file_get_contents('php://input'), true);
@@ -163,8 +133,9 @@ try {
         $pdo->beginTransaction();
         
         try {
-            $reservation = fetchOne('SELECT r.*, t.table_number FROM reservations r 
-                                     LEFT JOIN cafe_tables t ON r.table_id = t.table_id 
+            $reservation = fetchOne('SELECT r.*, t.table_number 
+                                     FROM reservations r
+                                     LEFT JOIN cafe_tables t ON r.table_id = t.table_id
                                      WHERE r.reservation_id = ?', [$id]);
             if (!$reservation) {
                 sendResponse(false, 'Reservation not found');
@@ -175,49 +146,44 @@ try {
             $pdo->prepare('UPDATE reservations SET status = ?, updated_at = NOW() WHERE reservation_id = ?')
                 ->execute([$status, $id]);
             
-            // If cancelled, free the table
             if ($status === 'cancelled' && $reservation['table_id']) {
                 $pdo->prepare('UPDATE cafe_tables SET status = "available" WHERE table_id = ?')
                     ->execute([$reservation['table_id']]);
-            }
-            
-            // If confirmed, keep table as reserved
-            if ($status === 'confirmed' && $oldStatus === 'pending') {
-                // Table already reserved from creation, keep it
+            } else if ($status === 'confirmed' && $reservation['table_id']) {
+                $pdo->prepare('UPDATE cafe_tables SET status = "reserved" WHERE table_id = ?')
+                    ->execute([$reservation['table_id']]);
             }
             
             // ============================================================
-            // SEND EMAIL NOTIFICATION WHEN ADMIN APPROVES
+            // SEND EMAIL NOTIFICATION WHEN ADMIN CONFIRMS/CANCELLS
             // ============================================================
-            if (($status === 'confirmed' || $status === 'cancelled') && $reservation['customer_email']) {
-                try {
+            if ($status === 'confirmed' || $status === 'cancelled') {
+                $customerEmail = $reservation['customer_email'];
+                $customerName = $reservation['customer_name'];
+                $tableNumber = $reservation['table_number'] ?? 'TBD';
+                
+                if ($customerEmail && filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
+                    // Include email sender
                     require_once __DIR__ . '/email_sender.php';
                     
-                    if ($status === 'confirmed') {
-                        sendReservationEmail(
-                            $reservation['customer_email'],
-                            $reservation['customer_name'],
-                            $reservation['reservation_date'],
-                            $reservation['reservation_time'],
-                            $reservation['number_of_guests'],
-                            $reservation['table_number'] ?? 'Reserved Table',
-                            'confirmed'
-                        );
-                        error_log("[Email] Reservation confirmation sent to {$reservation['customer_email']}");
-                    } else if ($status === 'cancelled') {
-                        sendReservationEmail(
-                            $reservation['customer_email'],
-                            $reservation['customer_name'],
-                            $reservation['reservation_date'],
-                            $reservation['reservation_time'],
-                            $reservation['number_of_guests'],
-                            $reservation['table_number'] ?? 'Reserved Table',
-                            'cancelled'
-                        );
-                        error_log("[Email] Reservation cancellation sent to {$reservation['customer_email']}");
+                    // Send the email
+                    $emailSent = sendReservationEmail(
+                        $customerEmail,
+                        $customerName,
+                        $reservation['reservation_date'],
+                        $reservation['reservation_time'],
+                        $reservation['number_of_guests'],
+                        $tableNumber,
+                        $status
+                    );
+                    
+                    if ($emailSent) {
+                        error_log("[Reservation] Email sent to {$customerEmail} for reservation #{$id} - Status: {$status}");
+                    } else {
+                        error_log("[Reservation] Failed to send email to {$customerEmail}");
                     }
-                } catch (Exception $e) {
-                    error_log("[Email] Failed to send reservation email: " . $e->getMessage());
+                } else {
+                    error_log("[Reservation] Invalid email for reservation #{$id}: {$customerEmail}");
                 }
             }
             
@@ -228,17 +194,21 @@ try {
                 try {
                     $title = $status === 'confirmed' ? "✅ Reservation Confirmed!" : "❌ Reservation Cancelled";
                     $message = $status === 'confirmed' 
-                        ? "Your reservation for {$reservation['reservation_date']} at {$reservation['reservation_time']} has been confirmed by the admin."
-                        : "Your reservation for {$reservation['reservation_date']} at {$reservation['reservation_time']} has been cancelled by the admin.";
+                        ? "Your reservation for {$reservation['reservation_date']} at {$reservation['reservation_time']} has been confirmed."
+                        : "Your reservation for {$reservation['reservation_date']} at {$reservation['reservation_time']} has been cancelled.";
                     
-                    $notifSql = 'INSERT INTO notifications (user_id, notification_type, title, message, is_read, created_at)
-                                 VALUES (?, "reservation", ?, ?, 0, NOW())';
-                    $pdo->prepare($notifSql)->execute([$reservation['user_id'], $title, $message]);
-                    error_log("[Notification] Reservation update sent to user {$reservation['user_id']}");
+                    $pdo->prepare('INSERT INTO notifications (user_id, notification_type, title, message, is_read, created_at)
+                                   VALUES (?, "reservation", ?, ?, 0, NOW())')
+                        ->execute([$reservation['user_id'], $title, $message]);
+                    error_log("[Reservation] In-app notification sent to user {$reservation['user_id']}");
                 } catch (Exception $e) {
-                    error_log("[Notification] Failed: " . $e->getMessage());
+                    error_log("[Reservation] In-app notification failed: " . $e->getMessage());
                 }
             }
+            
+            // Log activity
+            logActivity(null, 'UPDATE', 'reservations', $id,
+                       "Reservation #{$id} status changed from {$oldStatus} to {$status}");
             
             $pdo->commit();
             
@@ -246,19 +216,20 @@ try {
             
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("[Reservation] PATCH error: " . $e->getMessage());
             sendResponse(false, 'Failed to update reservation: ' . $e->getMessage());
         }
     }
     
+    // ============================================================
     // DELETE - Cancel reservation
+    // ============================================================
     if ($method === 'DELETE') {
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         
         if (!$id) {
             sendResponse(false, 'Reservation ID required');
         }
-        
-        $pdo->beginTransaction();
         
         try {
             $reservation = fetchOne('SELECT * FROM reservations WHERE reservation_id = ?', [$id]);
@@ -268,18 +239,14 @@ try {
             
             $pdo->prepare('DELETE FROM reservations WHERE reservation_id = ?')->execute([$id]);
             
-            // Free the table
             if ($reservation['table_id']) {
                 $pdo->prepare('UPDATE cafe_tables SET status = "available" WHERE table_id = ?')
                     ->execute([$reservation['table_id']]);
             }
             
-            $pdo->commit();
-            
             sendResponse(true, "Reservation #{$id} cancelled");
             
         } catch (Exception $e) {
-            $pdo->rollBack();
             sendResponse(false, 'Failed to cancel reservation: ' . $e->getMessage());
         }
     }

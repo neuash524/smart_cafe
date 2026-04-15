@@ -1,66 +1,104 @@
 <?php
 /**
- * Smart Café Email Sender - COMPLETE VERSION
- * Handles all email notifications for reservations, orders, and queue
+ * Smart Café Email Sender - WORKING WITH GMAIL SMTP
+ * Uses PHPMailer to send real emails
  */
 
-// Configuration - UPDATE THESE VALUES FOR PRODUCTION
+require_once __DIR__ . '/src/PHPMailer.php';
+require_once __DIR__ . '/src/SMTP.php';
+require_once __DIR__ . '/src/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 define('CAFE_NAME', 'Smart Café');
-define('SITE_URL', 'http://localhost/smart-cafe'); // Change to your actual domain
+define('SITE_URL', 'http://localhost/smart-cafe');
+
+// Email log file path (for debugging)
+define('EMAIL_LOG_FILE', __DIR__ . '/email_log.txt');
+
+// ============================================================
+// GMAIL SMTP CONFIGURATION - UPDATE THESE VALUES!
+// ============================================================
+define('SMTP_HOST', 'smtp.gmail.com');
+define('SMTP_PORT', 587);
+define('SMTP_USER', 'your-email@gmail.com');      // <-- YOUR GMAIL
+define('SMTP_PASS', 'your-app-password');         // <-- GMAIL APP PASSWORD (not your login pass)
+define('SMTP_FROM_EMAIL', 'your-email@gmail.com');
+define('SMTP_FROM_NAME', 'Smart Café');
 
 /**
- * Send email using PHP mail() function
- * For production, consider using PHPMailer with SMTP for better deliverability
+ * Send email using PHPMailer with Gmail SMTP
  */
 function sendSmartCafeEmail($to, $subject, $message) {
+    // Validate email
     if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
-        error_log("[Email] Invalid email address: {$to}");
+        error_log("[Email] Invalid email: {$to}");
+        logEmailToFile($to, $subject, $message, "INVALID_EMAIL");
         return false;
     }
     
-    $headers = "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-    $headers .= "From: " . CAFE_NAME . " <noreply@" . $_SERVER['HTTP_HOST'] . ">\r\n";
-    $headers .= "Reply-To: " . CAFE_NAME . " <info@" . $_SERVER['HTTP_HOST'] . ">\r\n";
+    // Log to file first
+    logEmailToFile($to, $subject, $message, "ATTEMPT");
     
-    $html = '
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>' . CAFE_NAME . '</title>
-    </head>
-    <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f5f5f5;">
-        <div style="background: #8B4513; color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0;">☕ ' . CAFE_NAME . '</h1>
-            <p style="margin: 5px 0 0; opacity: 0.9;">Smart Dining Experience</p>
-        </div>
-        <div style="padding: 30px 20px; background: white; border-bottom: 1px solid #E5D4C1;">
-            ' . $message . '
-        </div>
-        <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
-            <p>This is an automated email from ' . CAFE_NAME . '. Please do not reply.</p>
-            <p>&copy; ' . date('Y') . ' ' . CAFE_NAME . '. All rights reserved.</p>
-        </div>
-    </body>
-    </html>
-    ';
-    
-    $result = mail($to, $subject, $html, $headers);
-    error_log("[Email] Sent to {$to} - Subject: {$subject} - Result: " . ($result ? "Success" : "Failed"));
-    return $result;
+    try {
+        $mail = new PHPMailer(true);
+        
+        // Enable SMTP debugging (0=off, 1=errors, 2=full)
+        $mail->SMTPDebug = 0;  // Set to 2 for testing
+        
+        // SMTP configuration
+        $mail->isSMTP();
+        $mail->Host       = SMTP_HOST;
+        $mail->SMTPAuth   = true;
+        $mail->Username   = SMTP_USER;
+        $mail->Password   = SMTP_PASS;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port       = SMTP_PORT;
+        
+        // Sender & Recipient
+        $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
+        $mail->addAddress($to);
+        $mail->addReplyTo(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
+        
+        // Email content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body    = $message;
+        $mail->AltBody = strip_tags($message); // Plain text fallback
+        
+        // Send
+        $mail->send();
+        
+        error_log("[Email] SUCCESS sent to {$to} - {$subject}");
+        logEmailToFile($to, $subject, $message, "SUCCESS");
+        return true;
+        
+    } catch (Exception $e) {
+        error_log("[Email] FAILED to send to {$to}: " . $mail->ErrorInfo);
+        logEmailToFile($to, $subject, $message, "FAILED: " . $mail->ErrorInfo);
+        return false;
+    }
 }
 
 /**
- * Send Reservation Email
- * @param string $to Customer email
- * @param string $name Customer name
- * @param string $date Reservation date (Y-m-d)
- * @param string $time Reservation time (H:i:s)
- * @param int $guests Number of guests
- * @param string $table Table number
- * @param string $status confirmed, cancelled, or pending
+ * Log email to file for debugging
+ */
+function logEmailToFile($to, $subject, $message, $status) {
+    $logEntry = "========================================\n";
+    $logEntry .= "Time: " . date('Y-m-d H:i:s') . "\n";
+    $logEntry .= "Status: {$status}\n";
+    $logEntry .= "To: {$to}\n";
+    $logEntry .= "Subject: {$subject}\n";
+    $logEntry .= "Message Preview: " . substr(strip_tags($message), 0, 200) . "\n";
+    $logEntry .= "========================================\n\n";
+    
+    file_put_contents(EMAIL_LOG_FILE, $logEntry, FILE_APPEND);
+}
+
+/**
+ * Send Reservation Confirmation/Cancellation Email
  */
 function sendReservationEmail($to, $name, $date, $time, $guests, $table, $status) {
     $dateFormatted = date('l, F j, Y', strtotime($date));
@@ -68,166 +106,257 @@ function sendReservationEmail($to, $name, $date, $time, $guests, $table, $status
     
     if ($status == 'confirmed') {
         $message = "
-            <h2 style=\"color: #8B4513; margin-top: 0;\">✅ Reservation Confirmed!</h2>
-            <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
-            <p>Great news! Your reservation at <strong>" . CAFE_NAME . "</strong> has been <strong style=\"color: #10b981;\">confirmed</strong>!</p>
-            <div style=\"background: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #10b981;\">
-                <p style=\"margin: 5px 0;\"><strong>📅 Date:</strong> $dateFormatted</p>
-                <p style=\"margin: 5px 0;\"><strong>⏰ Time:</strong> $timeFormatted</p>
-                <p style=\"margin: 5px 0;\"><strong>👥 Guests:</strong> $guests</p>
-                <p style=\"margin: 5px 0;\"><strong>🪑 Table:</strong> $table</p>
-            </div>
-            <p>We look forward to serving you! Please arrive on time for your reservation.</p>
-            <p>While you wait, you can <a href=\"" . SITE_URL . "/customer_dashboard.php#menu\" style=\"background: #8B4513; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;\">Browse Our Menu</a></p>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset='UTF-8'>
+                <title>Reservation Confirmed</title>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                    .container { max-width: 600px; margin: 0 auto; background: #fff; }
+                    .header { background: #8B4513; color: white; padding: 25px; text-align: center; }
+                    .header h2 { margin: 0; font-size: 24px; }
+                    .content { padding: 30px; }
+                    .info-box { background: #f8f3ed; padding: 20px; margin: 20px 0; border-radius: 12px; border-left: 4px solid #10b981; }
+                    .info-item { margin-bottom: 12px; }
+                    .info-label { font-weight: bold; color: #8B4513; width: 80px; display: inline-block; }
+                    .button { background: #8B4513; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; display: inline-block; margin-top: 15px; }
+                    .footer { text-align: center; padding: 20px; border-top: 1px solid #eee; color: #999; font-size: 12px; }
+                </style>
+            </head>
+            <body>
+                <div class='container'>
+                    <div class='header'>
+                        <h2>☕ Smart Café</h2>
+                    </div>
+                    <div class='content'>
+                        <h2 style='color: #8B4513; margin-top: 0;'>✅ Reservation Confirmed!</h2>
+                        <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
+                        <p>Great news! Your reservation at <strong>Smart Café</strong> has been <strong style='color: #10b981;'>confirmed</strong>!</p>
+                        <div class='info-box'>
+                            <div class='info-item'><span class='info-label'>📅 Date:</span> {$dateFormatted}</div>
+                            <div class='info-item'><span class='info-label'>⏰ Time:</span> {$timeFormatted}</div>
+                            <div class='info-item'><span class='info-label'>👥 Guests:</span> {$guests}</div>
+                            <div class='info-item'><span class='info-label'>🪑 Table:</span> " . htmlspecialchars($table) . "</div>
+                        </div>
+                        <p>We look forward to serving you! Please arrive on time for your reservation.</p>
+                        <p style='text-align: center;'>
+                            <a href='" . SITE_URL . "/customer_dashboard.php#menu' class='button' style='background: #8B4513; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; display: inline-block;'>
+                                Browse Our Menu
+                            </a>
+                        </p>
+                        <p style='margin-top: 25px; font-size: 14px; color: #666;'>
+                            Need to make changes? Please contact us at least 2 hours before your reservation time.
+                        </p>
+                    </div>
+                    <div class='footer'>
+                        <p>Smart Café | 123 Café Street | +1 234 567 8900</p>
+                        <p>&copy; " . date('Y') . " Smart Café. All rights reserved.</p>
+                    </div>
+                </div>
+            </body>
+            </html>
         ";
-        $subject = "✅ Reservation Confirmed - " . CAFE_NAME;
+        $subject = "✅ Reservation Confirmed - Smart Café";
     } 
     elseif ($status == 'cancelled') {
         $message = "
-            <h2 style=\"color: #8B4513; margin-top: 0;\">❌ Reservation Cancelled</h2>
-            <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
-            <p>Your reservation for <strong>$dateFormatted at $timeFormatted</strong> has been <strong style=\"color: #dc2626;\">cancelled</strong>.</p>
-            <div style=\"background: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #dc2626;\">
-                <p style=\"margin: 5px 0;\"><strong>📅 Date:</strong> $dateFormatted</p>
-                <p style=\"margin: 5px 0;\"><strong>⏰ Time:</strong> $timeFormatted</p>
-                <p style=\"margin: 5px 0;\"><strong>👥 Guests:</strong> $guests</p>
-                <p style=\"margin: 5px 0;\"><strong>🪑 Table:</strong> $table</p>
-            </div>
-            <p>If you didn't request this cancellation, please contact us immediately.</p>
-            <p><a href=\"" . SITE_URL . "/customer_dashboard.php#reserve\" style=\"background: #8B4513; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;\">Book a New Reservation</a></p>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset='UTF-8'>
+                <title>Reservation Cancelled</title>
+                <style>
+                    body { font-family: Arial, sans-serif; line-height: 1.6; }
+                    .container { max-width: 600px; margin: 0 auto; }
+                    .header { background: #8B4513; color: white; padding: 25px; text-align: center; }
+                    .content { padding: 30px; }
+                    .info-box { background: #f8f3ed; padding: 20px; margin: 20px 0; border-radius: 12px; border-left: 4px solid #dc2626; }
+                </style>
+            </head>
+            <body>
+                <div class='container'>
+                    <div class='header'>
+                        <h2>☕ Smart Café</h2>
+                    </div>
+                    <div class='content'>
+                        <h2 style='color: #8B4513;'>❌ Reservation Cancelled</h2>
+                        <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
+                        <p>Your reservation has been <strong style='color: #dc2626;'>cancelled</strong> as requested.</p>
+                        <div class='info-box'>
+                            <p><strong>📅 Date:</strong> {$dateFormatted}</p>
+                            <p><strong>⏰ Time:</strong> {$timeFormatted}</p>
+                            <p><strong>👥 Guests:</strong> {$guests}</p>
+                            <p><strong>🪑 Table:</strong> " . htmlspecialchars($table) . "</p>
+                        </div>
+                        <p>If you did not request this cancellation, please contact us immediately.</p>
+                        <p style='text-align: center;'>
+                            <a href='" . SITE_URL . "/customer_dashboard.php#reserve' class='button' style='background: #8B4513; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; display: inline-block;'>
+                                Book a New Reservation
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </body>
+            </html>
         ";
-        $subject = "❌ Reservation Cancelled - " . CAFE_NAME;
+        $subject = "❌ Reservation Cancelled - Smart Café";
     }
     else {
-        $message = "
-            <h2 style=\"color: #8B4513; margin-top: 0;\">📋 Reservation Request Received</h2>
-            <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
-            <p>Thank you for choosing " . CAFE_NAME . "! We've received your reservation request.</p>
-            <div style=\"background: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #f59e0b;\">
-                <p style=\"margin: 5px 0;\"><strong>📅 Date:</strong> $dateFormatted</p>
-                <p style=\"margin: 5px 0;\"><strong>⏰ Time:</strong> $timeFormatted</p>
-                <p style=\"margin: 5px 0;\"><strong>👥 Guests:</strong> $guests</p>
-                <p style=\"margin: 5px 0;\"><strong>🪑 Table:</strong> $table</p>
-            </div>
-            <p>Your reservation is currently <strong style=\"color: #f59e0b;\">pending admin approval</strong>.</p>
-            <p>You'll receive another email once your reservation is confirmed.</p>
-        ";
-        $subject = "📋 Reservation Request Received - " . CAFE_NAME;
+        return false;
     }
     
     return sendSmartCafeEmail($to, $subject, $message);
 }
 
 /**
- * Send Order Email
- * @param string $to Customer email
- * @param string $name Customer name
- * @param string $orderRef Order reference number
- * @param array $items Array of order items
- * @param float $total Total amount
- * @param string $status preparing, ready, or completed
+ * Send Order Status Update Email
  */
 function sendOrderEmail($to, $name, $orderRef, $items, $total, $status) {
-    $itemsHtml = "<ul style='margin: 0; padding-left: 20px;'>";
+    // Build items HTML
+    $itemsHtml = "";
     foreach ($items as $item) {
-        $itemsHtml .= "<li style='margin: 8px 0;'>{$item['quantity']}× " . htmlspecialchars($item['item_name']) . " - <strong>$" . number_format($item['subtotal'], 2) . "</strong></li>";
-    }
-    $itemsHtml .= "</ul>";
-    
-    $totalFormatted = number_format($total, 2);
-    
-    if ($status == 'preparing') {
-        $message = "
-            <h2 style=\"color: #8B4513; margin-top: 0;\">👨‍🍳 Order Being Prepared</h2>
-            <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
-            <p>Great news! Your order <strong>$orderRef</strong> is now being prepared by our kitchen staff.</p>
-            <div style=\"background: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #3b82f6;\">
-                <h3 style=\"margin-top: 0; color: #8B4513;\">Order Details</h3>
-                $itemsHtml
-                <p style=\"margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd;\"><strong>Total:</strong> $$totalFormatted</p>
-            </div>
-            <p>We'll notify you as soon as your order is ready for pickup.</p>
-        ";
-        $subject = "👨‍🍳 Order Being Prepared - $orderRef";
-    }
-    elseif ($status == 'ready') {
-        $message = "
-            <h2 style=\"color: #8B4513; margin-top: 0;\">✅ Order Ready for Pickup!</h2>
-            <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
-            <p>Your order <strong>$orderRef</strong> is <strong style=\"color: #10b981;\">ready for pickup</strong>!</p>
-            <div style=\"background: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #10b981;\">
-                <h3 style=\"margin-top: 0; color: #8B4513;\">Order Details</h3>
-                $itemsHtml
-                <p style=\"margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd;\"><strong>Total:</strong> $$totalFormatted</p>
-            </div>
-            <p>Please come to the counter to collect your order. Thank you for choosing " . CAFE_NAME . "!</p>
-        ";
-        $subject = "✅ Order Ready for Pickup - $orderRef";
-    }
-    elseif ($status == 'completed') {
-        $message = "
-            <h2 style=\"color: #8B4513; margin-top: 0;\">🎉 Order Completed</h2>
-            <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
-            <p>Your order <strong>$orderRef</strong> has been marked as <strong style=\"color: #10b981;\">completed</strong>.</p>
-            <div style=\"background: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #10b981;\">
-                <h3 style=\"margin-top: 0; color: #8B4513;\">Order Summary</h3>
-                $itemsHtml
-                <p style=\"margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd;\"><strong>Total Paid:</strong> $$totalFormatted</p>
-            </div>
-            <p>Thank you for dining with us! We hope to see you again soon.</p>
-            <p><a href=\"" . SITE_URL . "/customer_dashboard.php#reserve\" style=\"background: #8B4513; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;\">Book Your Next Visit</a></p>
-        ";
-        $subject = "🎉 Order Completed - Thank You! - $orderRef";
-    }
-    else {
-        return false;
+        $itemsHtml .= "<tr>
+                            <td style='padding: 8px; border-bottom: 1px solid #eee;'>" . htmlspecialchars($item['item_name']) . "</td>
+                            <td style='padding: 8px; border-bottom: 1px solid #eee; text-align: center;'>" . $item['quantity'] . "</td>
+                            <td style='padding: 8px; border-bottom: 1px solid #eee; text-align: right;'>$" . number_format($item['subtotal'], 2) . "</td>
+                        </tr>";
     }
     
+    $statusText = '';
+    $statusColor = '';
+    $statusEmoji = '';
+    
+    switch($status) {
+        case 'preparing':
+            $statusText = 'Being Prepared';
+            $statusColor = '#f59e0b';
+            $statusEmoji = '👨‍🍳';
+            break;
+        case 'ready':
+            $statusText = 'Ready for Pickup';
+            $statusColor = '#10b981';
+            $statusEmoji = '✅';
+            break;
+        case 'completed':
+            $statusText = 'Completed';
+            $statusColor = '#10b981';
+            $statusEmoji = '🎉';
+            break;
+        case 'cancelled':
+            $statusText = 'Cancelled';
+            $statusColor = '#dc2626';
+            $statusEmoji = '❌';
+            break;
+        default:
+            $statusText = $status;
+            $statusColor = '#6b7280';
+            $statusEmoji = '📋';
+    }
+    
+    $message = "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <title>Order Update</title>
+            <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; }
+                .container { max-width: 600px; margin: 0 auto; }
+                .header { background: #8B4513; color: white; padding: 20px; text-align: center; }
+                .content { padding: 30px; }
+                .status-box { background: #f8f3ed; padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center; }
+                .status { font-size: 24px; font-weight: bold; color: {$statusColor}; }
+                table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                th { background: #f0f0f0; padding: 10px; text-align: left; }
+                .total { font-size: 18px; font-weight: bold; text-align: right; margin-top: 15px; }
+                .button { background: #8B4513; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; display: inline-block; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h2>☕ Smart Café</h2>
+                </div>
+                <div class='content'>
+                    <h2 style='color: #8B4513;'>{$statusEmoji} Order Update</h2>
+                    <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
+                    <div class='status-box'>
+                        <div class='status'>Status: {$statusText}</div>
+                        <p>Order Reference: <strong>{$orderRef}</strong></p>
+                    </div>
+                    
+                    <h3>Order Summary</h3>
+                    <table>
+                        <tr>
+                            <th>Item</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                        </tr>
+                        {$itemsHtml}
+                    </table>
+                    <div class='total'>
+                        <strong>Total: $" . number_format($total, 2) . "</strong>
+                    </div>
+                    
+                    <p style='text-align: center; margin-top: 30px;'>
+                        <a href='" . SITE_URL . "/customer_dashboard.php' class='button' style='background: #8B4513; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; display: inline-block;'>
+                            View My Orders
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </body>
+        </html>
+    ";
+    
+    $subject = "{$statusEmoji} Order {$statusText} - {$orderRef}";
     return sendSmartCafeEmail($to, $subject, $message);
 }
 
 /**
- * Send Queue Email
- * @param string $to Customer email
- * @param string $name Customer name
- * @param int $position Queue position
- * @param int $partySize Number of people
- * @param int $waitTime Estimated wait time in minutes
- * @param string $status joined or ready
+ * Send Queue Ready Email
  */
 function sendQueueEmail($to, $name, $position, $partySize, $waitTime, $status) {
-    if ($status == 'joined') {
+    if ($status == 'ready') {
         $message = "
-            <h2 style=\"color: #8B4513; margin-top: 0;\">⏱️ You're in the Queue!</h2>
-            <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
-            <p>You've successfully joined the waiting queue at " . CAFE_NAME . "!</p>
-            <div style=\"background: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #f59e0b;\">
-                <p style=\"margin: 5px 0;\"><strong>📍 Position:</strong> #$position</p>
-                <p style=\"margin: 5px 0;\"><strong>⏰ Estimated Wait:</strong> $waitTime minutes</p>
-                <p style=\"margin: 5px 0;\"><strong>👥 Party Size:</strong> $partySize</p>
-            </div>
-            <p>We'll notify you via email and in-app notification when your table is ready!</p>
-            <p><a href=\"" . SITE_URL . "/customer_dashboard.php#menu\" style=\"background: #8B4513; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;\">Pre-order While You Wait</a></p>
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset='UTF-8'>
+                <title>Your Table is Ready!</title>
+                <style>
+                    body { font-family: Arial, sans-serif; }
+                    .container { max-width: 600px; margin: 0 auto; }
+                    .header { background: #8B4513; color: white; padding: 20px; text-align: center; }
+                    .content { padding: 30px; text-align: center; }
+                    .ready-box { background: #d1fae5; padding: 25px; border-radius: 12px; margin: 20px 0; }
+                    .ready-icon { font-size: 48px; }
+                </style>
+            </head>
+            <body>
+                <div class='container'>
+                    <div class='header'>
+                        <h2>☕ Smart Café</h2>
+                    </div>
+                    <div class='content'>
+                        <div class='ready-box'>
+                            <div class='ready-icon'>✅</div>
+                            <h2 style='color: #065f46;'>Your Table is Ready!</h2>
+                            <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
+                            <p>Your table is now ready for you!</p>
+                            <p><strong>Party Size:</strong> {$partySize} people</p>
+                            <p>Please proceed to the host station within 10 minutes.</p>
+                        </div>
+                        <p style='margin-top: 20px;'>Thank you for choosing Smart Café!</p>
+                    </div>
+                </div>
+            </body>
+            </html>
         ";
-        $subject = "⏱️ You're in the Queue - " . CAFE_NAME;
+        $subject = "✅ Your Table is Ready - Smart Café";
+        return sendSmartCafeEmail($to, $subject, $message);
     }
-    elseif ($status == 'ready') {
-        $message = "
-            <h2 style=\"color: #8B4513; margin-top: 0;\">✅ Your Table is Ready!</h2>
-            <p>Dear <strong>" . htmlspecialchars($name) . "</strong>,</p>
-            <p>Good news! Your table is now <strong style=\"color: #10b981;\">ready</strong> at " . CAFE_NAME . ".</p>
-            <div style=\"background: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #10b981;\">
-                <p style=\"margin: 5px 0;\"><strong>👥 Party Size:</strong> $partySize</p>
-            </div>
-            <p>Please proceed to the host station. Our staff will assist you.</p>
-            <p>If you have any pre-orders, they will be brought to your table shortly.</p>
-        ";
-        $subject = "✅ Your Table is Ready - " . CAFE_NAME;
-    }
-    else {
-        return false;
-    }
-    
-    return sendSmartCafeEmail($to, $subject, $message);
+    return false;
 }
 ?>
