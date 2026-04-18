@@ -1,48 +1,34 @@
 ========================================
-Time: 2026-04-15 22:24:37
-To: neu.ash56@gmail.com
+Time: 2026-04-15 23:27:40
+Status: ATTEMPT
+To: madi@gmail.com
 Subject: ✅ Reservation Confirmed - Smart Café
-Message:
+Message Preview: 
 
-            
-            
-            
-                
-                Reservation Confirmed
-                
-                    body { font-family: Arial, sans-serif; line-height: 1.6; }
-                    .container { max-width: 600px; margin: 0 auto; }
-                    .header { background: #8B4513; color: white; padding: 20px; text-align: center; }
-                    .content { padding: 20px; }
-                    .info-box { background: #f5f5f5; padding: 15px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #10b981; }
-                    .button { background: #8B4513; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; }
-                
-            
-            
-                
-                    
-                        ☕ Smart Café
-                    
-                    
-                        ✅ Reservation Confirmed!
-                        Dear Aashish Neupane,
-                        Great news! Your reservation at Smart Café has been confirmed!
-                        
-                            📅 Date: Friday, April 17, 2026
-                            ⏰ Time: 1:15 AM
-                            👥 Guests: 2
-                            🪑 Table: Table 2
-                        
-                        We look forward to serving you! Please arrive on time for your reservation.
-                        
-                            
-                                Browse Our Menu
-                            
-                        
-                    
-                
-            
-            
-        
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-15 23:27:42
+Status: MAIL_FAILED
+To: madi@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
 ========================================
 
