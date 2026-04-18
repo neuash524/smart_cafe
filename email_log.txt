@@ -1,0 +1,212 @@
+========================================
+Time: 2026-04-18 21:38:17
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-18 21:38:19
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-18 21:38:25
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Your Table is Ready - Smart Café
+Message Preview: 
+
+Table Ready
+
+✅ Your Table is Ready!
+Dear Aashish Neupane,
+Your table is now ready for 2 people!
+Please proceed to the host station.
+View Dashboard
+
+
+========================================
+
+========================================
+Time: 2026-04-18 21:38:27
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: ✅ Your Table is Ready - Smart Café
+Message Preview: 
+
+Table Ready
+
+✅ Your Table is Ready!
+Dear Aashish Neupane,
+Your table is now ready for 2 people!
+Please proceed to the host station.
+View Dashboard
+
+
+========================================
+
+========================================
+Time: 2026-04-18 21:41:32
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: 👨‍🍳 Order Being Prepared - ORD-4044
+Message Preview: 
+
+Order Update
+
+👨‍🍳 Order Update
+Dear Aashish Neupane,
+Your order ORD-4044 is Being Prepared
+Total: $12.99
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-18 21:41:34
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: 👨‍🍳 Order Being Prepared - ORD-4044
+Message Preview: 
+
+Order Update
+
+👨‍🍳 Order Update
+Dear Aashish Neupane,
+Your order ORD-4044 is Being Prepared
+Total: $12.99
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-18 21:41:39
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Order Ready for Pickup - ORD-4044
+Message Preview: 
+
+Order Update
+
+✅ Order Update
+Dear Aashish Neupane,
+Your order ORD-4044 is Ready for Pickup
+Total: $12.99
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-18 21:41:41
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: ✅ Order Ready for Pickup - ORD-4044
+Message Preview: 
+
+Order Update
+
+✅ Order Update
+Dear Aashish Neupane,
+Your order ORD-4044 is Ready for Pickup
+Total: $12.99
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-18 21:41:42
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: 🎉 Order Completed - ORD-4044
+Message Preview: 
+
+Order Update
+
+🎉 Order Update
+Dear Aashish Neupane,
+Your order ORD-4044 is Completed
+Total: $12.99
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-18 21:41:44
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: 🎉 Order Completed - ORD-4044
+Message Preview: 
+
+Order Update
+
+🎉 Order Update
+Dear Aashish Neupane,
+Your order ORD-4044 is Completed
+Total: $12.99
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-18 21:45:56
+Status: ATTEMPT
+To: madi@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-18 21:45:58
+Status: MAIL_FAILED
+To: madi@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+

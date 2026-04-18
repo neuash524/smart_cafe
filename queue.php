@@ -3,7 +3,7 @@
  * Smart Café API — queue.php
  * GET    : Fetch queue
  * POST   : Join queue
- * PATCH  : Update queue entry status (admin approval triggers notification + EMAIL)
+ * PATCH  : Update queue entry status (admin approval triggers notification + EMAIL + ACTIVITY LOG)
  * DELETE : Remove from queue
  */
 
@@ -80,9 +80,11 @@ try {
         // Verify user exists if user_id is provided and column exists
         $validUserId = null;
         if ($hasUserIdColumn && $userId !== null) {
-            $userCheck = fetchOne('SELECT user_id FROM users WHERE user_id = ? AND is_active = 1', [$userId]);
+            $userCheck = fetchOne('SELECT user_id, full_name FROM users WHERE user_id = ? AND is_active = 1', [$userId]);
             if ($userCheck) {
                 $validUserId = $userId;
+                // Use the registered name if available
+                $customerName = $userCheck['full_name'];
             }
         }
         
@@ -108,7 +110,14 @@ try {
             }
             $queueId = $pdo->lastInsertId();
             
-            // NO notification to customer until admin seats them
+            // Log activity for joining queue
+            logActivity(
+                $validUserId,
+                'CREATE',
+                'queue',
+                $queueId,
+                "{$customerName} joined queue - Position #{$nextPos}, Party of {$partySize}"
+            );
             
             $pdo->commit();
             
@@ -122,7 +131,7 @@ try {
         }
     }
     
-    // PATCH - Update queue status (ADMIN SEATING TRIGGERS NOTIFICATION + EMAIL)
+    // PATCH - Update queue status (ADMIN SEATING TRIGGERS NOTIFICATION + EMAIL + ACTIVITY LOG)
     if ($method === 'PATCH') {
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         $b = json_decode(file_get_contents('php://input'), true);
@@ -136,13 +145,15 @@ try {
         $pdo->beginTransaction();
         
         try {
-            $entry = fetchOne('SELECT q.*, u.email as user_email, u.full_name as user_name 
+            $entry = fetchOne('SELECT q.*, u.email as user_email, u.full_name as user_name, u.user_id as user_id 
                                FROM queue q 
                                LEFT JOIN users u ON q.user_id = u.user_id 
                                WHERE q.queue_id = ?', [$id]);
             if (!$entry) {
                 sendResponse(false, 'Queue entry not found');
             }
+            
+            $oldStatus = $entry['status'];
             
             $extra = '';
             if ($status === 'seated') $extra = ', seated_at = NOW()';
@@ -152,8 +163,28 @@ try {
                 ->execute([$status, $id]);
             
             // ============================================================
-            // SEND EMAIL NOTIFICATION WHEN ADMIN SEATS THE CUSTOMER
+            // ADD ACTIVITY LOGGING HERE
             // ============================================================
+            $activityDescription = "Queue entry for {$entry['customer_name']} ";
+            if ($status === 'seated') {
+                $activityDescription .= "seated (Party of {$entry['party_size']})";
+            } else if ($status === 'called') {
+                $activityDescription .= "called to table";
+            } else if ($status === 'cancelled') {
+                $activityDescription .= "removed from queue";
+            } else {
+                $activityDescription .= "status changed from {$oldStatus} to {$status}";
+            }
+            
+            logActivity(
+                null,  // admin user id
+                'UPDATE', 
+                'queue', 
+                $id, 
+                $activityDescription
+            );
+            
+            // SEND EMAIL NOTIFICATION when seated
             if ($status === 'seated' && $entry['user_email']) {
                 try {
                     require_once __DIR__ . '/email_sender.php';
@@ -181,11 +212,10 @@ try {
                 }
             }
             
-            // ============================================================
-            // SEND IN-APP NOTIFICATION
-            // ============================================================
+            // SEND IN-APP NOTIFICATION when seated
             if ($status === 'seated' && $entry['user_id']) {
                 try {
+                    // Check if customer has a reservation
                     $reservation = fetchOne(
                         'SELECT t.table_number FROM reservations r 
                          LEFT JOIN cafe_tables t ON r.table_id = t.table_id 
@@ -214,6 +244,7 @@ try {
             
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("[Queue] PATCH error: " . $e->getMessage());
             sendResponse(false, 'Failed to update queue: ' . $e->getMessage());
         }
     }
@@ -227,9 +258,25 @@ try {
         }
         
         try {
+            // Get entry info before deleting for logging
+            $entry = fetchOne('SELECT customer_name, party_size FROM queue WHERE queue_id = ?', [$id]);
+            
             $pdo->prepare('DELETE FROM queue WHERE queue_id = ?')->execute([$id]);
+            
+            // Log activity for removal
+            if ($entry) {
+                logActivity(
+                    null,
+                    'DELETE',
+                    'queue',
+                    $id,
+                    "Queue entry removed for {$entry['customer_name']} (Party of {$entry['party_size']})"
+                );
+            }
+            
             sendResponse(true, 'Removed from queue');
         } catch (Exception $e) {
+            error_log("[Queue] DELETE error: " . $e->getMessage());
             sendResponse(false, 'Failed to remove from queue: ' . $e->getMessage());
         }
     }

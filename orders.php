@@ -3,7 +3,7 @@
  * Smart Café API — orders.php
  * GET    : Fetch orders
  * POST   : Create order (pending, no notification)
- * PATCH  : Update order status (admin action triggers notification + EMAIL)
+ * PATCH  : Update order status (admin action triggers notification + EMAIL + ACTIVITY LOG)
  */
 
 header('Content-Type: application/json');
@@ -116,7 +116,14 @@ try {
                            VALUES (?, ?, ?, "completed", NOW())';
             $pdo->prepare($paymentSql)->execute([$orderId, $totalAmount, $paymentMethod]);
             
-            // NO notification sent to customer - wait for admin to update status
+            // Log activity for order creation
+            logActivity(
+                $validUserId,
+                'CREATE',
+                'orders',
+                $orderId,
+                "Order #{$orderRef} placed by {$customerName} — \${$totalAmount}"
+            );
             
             $pdo->commit();
             
@@ -132,7 +139,7 @@ try {
         }
     }
     
-    // PATCH - Update order status (ADMIN ACTION TRIGGERS NOTIFICATION + EMAIL)
+    // PATCH - Update order status (ADMIN ACTION TRIGGERS NOTIFICATION + EMAIL + ACTIVITY LOG)
     if ($method === 'PATCH') {
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         $b = json_decode(file_get_contents('php://input'), true);
@@ -146,7 +153,7 @@ try {
         $pdo->beginTransaction();
         
         try {
-            $order = fetchOne('SELECT o.*, u.email as user_email, u.full_name as user_name 
+            $order = fetchOne('SELECT o.*, u.email as user_email, u.full_name as user_name, u.user_id as user_id 
                                FROM orders o 
                                LEFT JOIN users u ON o.user_id = u.user_id 
                                WHERE o.order_id = ?', [$id]);
@@ -159,22 +166,30 @@ try {
             $pdo->prepare('UPDATE orders SET status = ?, updated_at = NOW() WHERE order_id = ?')
                 ->execute([$status, $id]);
             
+            // ============================================================
+            // ADD ACTIVITY LOGGING HERE
+            // ============================================================
+            logActivity(
+                null,  // admin user id - can be fetched from session if needed
+                'UPDATE', 
+                'orders', 
+                $id, 
+                "Order #{$order['order_ref']} status changed from {$oldStatus} to {$status}"
+            );
+            
             // Get order items for email
             $orderItems = fetchAll('SELECT item_name, quantity, unit_price, (quantity * unit_price) as subtotal 
                                     FROM order_items WHERE order_id = ?', [$id]);
             
-            // Determine customer email (prefer user email, fallback to order customer_email)
+            // Determine customer email
             $customerEmail = $order['user_email'] ?? $order['customer_email'];
             $customerName = $order['user_name'] ?? $order['customer_name'];
             
-            // ============================================================
-            // SEND EMAIL NOTIFICATION WHEN ADMIN UPDATES ORDER STATUS
-            // ============================================================
+            // SEND EMAIL NOTIFICATION
             if ($customerEmail && ($status === 'preparing' || $status === 'ready' || $status === 'completed' || $status === 'cancelled')) {
                 try {
                     require_once __DIR__ . '/email_sender.php';
                     
-                    // Prepare items array for email
                     $itemsForEmail = [];
                     foreach ($orderItems as $item) {
                         $itemsForEmail[] = [
@@ -185,44 +200,24 @@ try {
                     }
                     
                     if ($status === 'preparing') {
-                        sendOrderEmail(
-                            $customerEmail,
-                            $customerName,
-                            $order['order_ref'],
-                            $itemsForEmail,
-                            $order['total_amount'],
-                            'preparing'
-                        );
+                        sendOrderEmail($customerEmail, $customerName, $order['order_ref'], $itemsForEmail, $order['total_amount'], 'preparing');
                         error_log("[Email] Order preparing notification sent to {$customerEmail}");
                     } else if ($status === 'ready') {
-                        sendOrderEmail(
-                            $customerEmail,
-                            $customerName,
-                            $order['order_ref'],
-                            $itemsForEmail,
-                            $order['total_amount'],
-                            'ready'
-                        );
+                        sendOrderEmail($customerEmail, $customerName, $order['order_ref'], $itemsForEmail, $order['total_amount'], 'ready');
                         error_log("[Email] Order ready notification sent to {$customerEmail}");
                     } else if ($status === 'completed') {
-                        sendOrderEmail(
-                            $customerEmail,
-                            $customerName,
-                            $order['order_ref'],
-                            $itemsForEmail,
-                            $order['total_amount'],
-                            'completed'
-                        );
+                        sendOrderEmail($customerEmail, $customerName, $order['order_ref'], $itemsForEmail, $order['total_amount'], 'completed');
                         error_log("[Email] Order completed notification sent to {$customerEmail}");
+                    } else if ($status === 'cancelled') {
+                        sendOrderEmail($customerEmail, $customerName, $order['order_ref'], $itemsForEmail, $order['total_amount'], 'cancelled');
+                        error_log("[Email] Order cancelled notification sent to {$customerEmail}");
                     }
                 } catch (Exception $e) {
                     error_log("[Email] Failed to send order email: " . $e->getMessage());
                 }
             }
             
-            // ============================================================
             // SEND IN-APP NOTIFICATION
-            // ============================================================
             if ($order['user_id'] && $status !== $oldStatus) {
                 try {
                     $title = '';
@@ -264,6 +259,7 @@ try {
             
         } catch (Exception $e) {
             $pdo->rollBack();
+            error_log("[Order] PATCH error: " . $e->getMessage());
             sendResponse(false, 'Failed to update order: ' . $e->getMessage());
         }
     }
