@@ -610,61 +610,79 @@ async function seatCustomer(id) {
             return;
         }
         
-        // Check if this customer has a CONFIRMED reservation for TODAY
-        const reservations = getReservations();
+        console.log('[Queue] Seating customer:', entry);
+        
+        // Get today's date in YYYY-MM-DD format
         const today = new Date().toISOString().split('T')[0];
         
-        const customerReservation = reservations.find(r => 
-            (r.user_id === entry.user_id || r.customer_email === entry.customer_email) && 
-            r.status === 'confirmed' &&
-            r.reservation_date === today
-        );
+        // Fetch fresh reservations from database to ensure we have latest status
+        let reservations = [];
+        let customerReservation = null;
         
-        let tableToAssign = null;
-        let tableIdToAssign = null;
-        let tableNumberToAssign = null;
-        
-        // IMPORTANT: Only seat to the reserved table if they have a confirmed reservation
-        if (customerReservation && customerReservation.table_id) {
-            const tables = getTables();
-            tableToAssign = tables.find(t => t.table_id === customerReservation.table_id);
+        try {
+            // First try to fetch from API to get latest data
+            const response = await fetch(`reservations.php?date=${today}`);
+            const result = await response.json();
             
-            if (tableToAssign && tableToAssign.status === 'reserved') {
-                tableIdToAssign = tableToAssign.table_id;
-                tableNumberToAssign = tableToAssign.table_number;
-                console.log(`[Queue] Customer has confirmed reservation for table: ${tableNumberToAssign}`);
+            if (result.success && result.data?.reservations) {
+                reservations = result.data.reservations;
+                console.log('[Queue] Fetched fresh reservations from API:', reservations.length);
                 
-                // Update the reservation status to 'completed' when seated
-                await fetch(`reservations.php?id=${customerReservation.reservation_id}`, {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: 'completed' })
-                });
-                
-                // Update local storage for reservation
-                const updatedReservations = getReservations();
-                const resIndex = updatedReservations.findIndex(r => r.reservation_id === customerReservation.reservation_id);
-                if (resIndex !== -1) {
-                    updatedReservations[resIndex].status = 'completed';
-                    saveReservations(updatedReservations);
-                }
-            } else {
-                showAdminNotification(`⚠️ Customer's reserved table ${tableToAssign?.table_number} is not available.`, 'warning');
-                // Do NOT seat - they should wait for their reserved table
-                showAdminNotification(`Please make table ${tableToAssign?.table_number} available first.`, 'error');
-                return;
+                // Find reservation for this customer (by email or user_id)
+                customerReservation = reservations.find(r => 
+                    (r.user_id === entry.user_id && r.user_id !== null && r.user_id !== undefined) ||
+                    (r.customer_email === entry.customer_email) ||
+                    (r.customer_name === entry.customer_name && r.reservation_date === today)
+                );
             }
-        } else {
-            // No reservation found - DO NOT SEAT
-            showAdminNotification(`❌ Customer does not have a confirmed reservation for today.`, 'error');
-            showAdminNotification(`Please ask them to make a reservation first.`, 'error');
+        } catch (apiError) {
+            console.error('[Queue] API fetch failed, using localStorage:', apiError);
+            reservations = getReservations();
+            customerReservation = reservations.find(r => 
+                (r.user_id === entry.user_id && r.user_id !== null && r.user_id !== undefined) ||
+                (r.customer_email === entry.customer_email) ||
+                (r.customer_name === entry.customer_name && r.reservation_date === today)
+            );
+        }
+        
+        console.log('[Queue] Customer reservation check:', customerReservation);
+        
+        // Check if customer has a CONFIRMED reservation for TODAY
+        const hasConfirmedReservation = customerReservation && 
+                                       customerReservation.status === 'confirmed' &&
+                                       customerReservation.reservation_date === today;
+        
+        if (!hasConfirmedReservation) {
+            // No confirmed reservation found - show helpful message
+            const statusMsg = customerReservation ? 
+                `Reservation status is '${customerReservation.status}', not 'confirmed'.` : 
+                'No reservation found for today.';
+            
+            showAdminNotification(`❌ ${entry.customer_name} does not have a confirmed reservation for today. ${statusMsg} Please ask them to make a reservation first and ensure admin confirms it.`, 'error');
             return;
         }
         
-        if (!tableIdToAssign) {
-            showAdminNotification('No reserved table found for this customer!', 'error');
+        if (!customerReservation.table_id) {
+            showAdminNotification(`❌ ${entry.customer_name}'s reservation has no table assigned.`, 'error');
             return;
         }
+        
+        // Get the reserved table
+        const tables = getTables();
+        const tableToAssign = tables.find(t => t.table_id === customerReservation.table_id);
+        
+        if (!tableToAssign) {
+            showAdminNotification(`❌ Reserved table not found.`, 'error');
+            return;
+        }
+        
+        if (tableToAssign.status !== 'reserved') {
+            showAdminNotification(`⚠️ ${entry.customer_name}'s reserved table ${tableToAssign.table_number} is currently ${tableToAssign.status}. Please make it available first.`, 'warning');
+            return;
+        }
+        
+        // All checks passed - proceed to seat the customer
+        console.log(`[Queue] Seating ${entry.customer_name} at reserved table ${tableToAssign.table_number}`);
         
         // Update queue status to seated
         const queueResponse = await fetch(`queue.php?id=${id}`, {
@@ -685,7 +703,7 @@ async function seatCustomer(id) {
             }
             
             // Update table status to occupied
-            const tableResponse = await fetch(`table.php?id=${tableIdToAssign}`, {
+            const tableResponse = await fetch(`table.php?id=${tableToAssign.table_id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: 'occupied' })
@@ -694,14 +712,41 @@ async function seatCustomer(id) {
             const tableResult = await tableResponse.json();
             
             if (tableResult.success) {
-                const tables = getTables();
-                const table = tables.find(t => t.table_id === tableIdToAssign);
+                const updatedTables = getTables();
+                const table = updatedTables.find(t => t.table_id === tableToAssign.table_id);
                 if (table) {
                     table.status = 'occupied';
-                    saveTables(tables);
+                    saveTables(updatedTables);
                 }
                 
-                showAdminNotification(`✅ Seated ${entry.customer_name} at their reserved table ${tableNumberToAssign}`, 'success');
+                // Update the reservation status to 'completed' when seated
+                try {
+                    const reservationResponse = await fetch(`reservations.php?id=${customerReservation.reservation_id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status: 'completed' })
+                    });
+                    
+                    const reservationResult = await reservationResponse.json();
+                    if (reservationResult.success) {
+                        console.log('[Queue] Reservation marked as completed');
+                        // Update local storage for reservation
+                        const updatedReservations = getReservations();
+                        const resIndex = updatedReservations.findIndex(r => r.reservation_id === customerReservation.reservation_id);
+                        if (resIndex !== -1) {
+                            updatedReservations[resIndex].status = 'completed';
+                            saveReservations(updatedReservations);
+                        }
+                    }
+                } catch (resError) {
+                    console.error('[Queue] Error updating reservation status:', resError);
+                }
+                
+                showAdminNotification(`✅ Seated ${entry.customer_name} at their reserved table ${tableToAssign.table_number}`, 'success');
+                
+                // Trigger email notification
+                triggerEmail('queue', id, 'seated');
+                
             } else {
                 showAdminNotification('Customer seated but table status update failed', 'warning');
             }
@@ -709,9 +754,6 @@ async function seatCustomer(id) {
             loadQueue();
             loadDashboard();
             loadReservations(); // Refresh reservations to show updated status
-            
-            // Trigger customer notification
-            triggerEmail('queue', id, 'ready');
             
         } else {
             showAdminNotification(queueResult.message || 'Failed to seat customer', 'error');
@@ -765,24 +807,33 @@ function callNextInQueue() {
     if (queue.length > 0) {
         const nextCustomer = queue[0];
         
-        // Check if they have a reservation
-        const reservations = getReservations();
+        // Get today's date
         const today = new Date().toISOString().split('T')[0];
+        
+        // Check if they have a confirmed reservation
+        const reservations = getReservations();
         const hasReservation = reservations.find(r => 
-            (r.user_id === nextCustomer.user_id || r.customer_email === nextCustomer.customer_email) && 
-            r.status === 'confirmed' &&
+            (r.user_id === nextCustomer.user_id && r.user_id !== null) || 
+            (r.customer_email === nextCustomer.customer_email) ||
+            (r.customer_name === nextCustomer.customer_name)
+        ) && reservations.find(r => 
+            r.status === 'confirmed' && 
             r.reservation_date === today
         );
         
-        const msg = hasReservation 
-            ? `Calling ${nextCustomer.customer_name} (has reserved table)`
-            : `⚠️ ${nextCustomer.customer_name} does not have a reservation. Please ask them to make one first.`;
-        
         if (hasReservation) {
-            showAdminNotification(msg, 'success');
+            showAdminNotification(`📢 Calling ${nextCustomer.customer_name} (has reserved table)`, 'success');
             triggerEmail('queue', nextCustomer.queue_id, 'called');
+            
+            // Also update queue status to 'called' in database
+            fetch(`queue.php?id=${nextCustomer.queue_id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'called' })
+            }).catch(err => console.error('[Queue] Error updating call status:', err));
+            
         } else {
-            showAdminNotification(msg, 'warning');
+            showAdminNotification(`⚠️ ${nextCustomer.customer_name} does NOT have a confirmed reservation for today. Please ask them to make a reservation first, then confirm it before seating.`, 'warning');
         }
     } else {
         showAdminNotification('Queue is empty!', 'error');
