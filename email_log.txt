@@ -318,3 +318,33 @@ View Orders
 
 ========================================
 
+========================================
+Time: 2026-04-20 21:22:07
+Status: ATTEMPT
+To: bladin397@gmail.com
+Subject: 🎉 Welcome to Smart Café!
+Message Preview: 
+
+
+
+Welcome to Smart Café
+
+    body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+    .container{max-width:600px;margin:0 auto;background:#fff;border-radius:1
+========================================
+
+========================================
+Time: 2026-04-20 21:22:09
+Status: MAIL_FAILED
+To: bladin397@gmail.com
+Subject: 🎉 Welcome to Smart Café!
+Message Preview: 
+
+
+
+Welcome to Smart Café
+
+    body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+    .container{max-width:600px;margin:0 auto;background:#fff;border-radius:1
+========================================
+
