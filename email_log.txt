@@ -210,3 +210,111 @@ body{font-family:Arial,sans-serif;}
 .content{padd
 ========================================
 
+========================================
+Time: 2026-04-19 12:11:34
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: 👨‍🍳 Order Being Prepared - ORD-7903
+Message Preview: 
+
+Order Update
+
+👨‍🍳 Order Update
+Dear Aashish Neupane,
+Your order ORD-7903 is Being Prepared
+Total: $21.98
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-19 12:11:36
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: 👨‍🍳 Order Being Prepared - ORD-7903
+Message Preview: 
+
+Order Update
+
+👨‍🍳 Order Update
+Dear Aashish Neupane,
+Your order ORD-7903 is Being Prepared
+Total: $21.98
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-19 12:11:38
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Order Ready for Pickup - ORD-7903
+Message Preview: 
+
+Order Update
+
+✅ Order Update
+Dear Aashish Neupane,
+Your order ORD-7903 is Ready for Pickup
+Total: $21.98
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-19 12:11:40
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: ✅ Order Ready for Pickup - ORD-7903
+Message Preview: 
+
+Order Update
+
+✅ Order Update
+Dear Aashish Neupane,
+Your order ORD-7903 is Ready for Pickup
+Total: $21.98
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-19 12:11:45
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: 🎉 Order Completed - ORD-7903
+Message Preview: 
+
+Order Update
+
+🎉 Order Update
+Dear Aashish Neupane,
+Your order ORD-7903 is Completed
+Total: $21.98
+View Orders
+
+
+========================================
+
+========================================
+Time: 2026-04-19 12:11:47
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: 🎉 Order Completed - ORD-7903
+Message Preview: 
+
+Order Update
+
+🎉 Order Update
+Dear Aashish Neupane,
+Your order ORD-7903 is Completed
+Total: $21.98
+View Orders
+
+
+========================================
+
