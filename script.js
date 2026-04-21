@@ -578,6 +578,7 @@ async function syncSessionWithDatabase() {
 async function loadDataFromDatabase() {
     console.log('[API] Loading data from database...');
     await Promise.all([
+        loadTablesFromDB(),      // Add this line
         loadReservationsFromDB(),
         loadOrdersFromDB(),
         loadQueueFromDB()
@@ -1087,6 +1088,8 @@ function removeFromCart(itemId) {
 // RESERVATION - API INTEGRATED (Pending until admin approval)
 // ══════════════════════════════════════════════════════════════
 
+// REPLACE the handleReservation function in script.js with this:
+
 async function handleReservation(e) {
     e.preventDefault();
     if (!isLoggedIn()) { requireLogin('make a reservation'); return; }
@@ -1096,6 +1099,8 @@ async function handleReservation(e) {
     }
 
     const fd = new FormData(e.target);
+    
+    // Get fresh tables from localStorage (or better, from database)
     const tables = getTables();
     const tbl = tables.find(t => t.table_id === selectedTableId);
     const session = getSession();
@@ -1112,9 +1117,13 @@ async function handleReservation(e) {
         return;
     }
 
+    // CRITICAL FIX: Check table status again before submitting
     if (!tbl || tbl.status !== 'available') {
-        showNotification('Table no longer available.', 'error');
+        let msg = tbl ? `Table ${tbl.table_number} is ${tbl.status}` : 'Table no longer available';
+        showNotification(msg + '. Please select another table.', 'error');
+        // Clear selected table and refresh
         selectedTableId = null;
+        document.getElementById('selectedTableBadge')?.remove();
         renderTablesGrid();
         return;
     }
@@ -1126,6 +1135,7 @@ async function handleReservation(e) {
 
     const userId = session.user_id;
     console.log('[Reservation] Using user_id from session:', userId);
+    console.log('[Reservation] Selected table:', tbl.table_number, 'Status:', tbl.status);
 
     const reservationData = {
         user_id: userId,
@@ -1159,27 +1169,46 @@ async function handleReservation(e) {
             const savedReservation = result.data.reservation;
             console.log('[API] Reservation saved to database:', savedReservation);
             
-            const reservations = getReservations();
-            reservations.push(savedReservation);
-            saveReservations(reservations);
+            // IMPORTANT: Refresh all data from database to ensure consistency
+            await loadReservationsFromDB();
+            await loadTablesFromDB();  // Need to add this function
             
+            // Update local cache with fresh data
+            const freshReservations = getReservations();
             const freshTables = getTables();
-            const table = freshTables.find(t => t.table_id === selectedTableId);
-            if (table) {
-                table.status = 'reserved';
-                saveTables(freshTables);
+            
+            // Find and update the table status
+            const updatedTable = freshTables.find(t => t.table_id === selectedTableId);
+            if (updatedTable) {
+                console.log('[Reservation] Table', updatedTable.table_number, 'status now:', updatedTable.status);
             }
             
             document.getElementById('selectedTableBadge')?.remove();
             e.target.reset();
             prefillFormsFromSession();
             selectedTableId = null;
+            
+            // Force refresh the tables grid
             renderTablesGrid();
+            updateHeroStats();
             
             // Show message that reservation is pending admin approval
             showNotification(`✅ Reservation request submitted! Waiting for admin approval. You'll be notified when confirmed.`, 'success');
+            
+            // Force a storage event to notify other tabs
+            localStorage.setItem('sc_customer_ping', JSON.stringify({ type: 'sc_reservations', ts: Date.now() }));
+            
         } else {
-            showNotification(result.message || 'Failed to create reservation', 'error');
+            // Check if the error is about table availability
+            if (result.message && result.message.includes('Table')) {
+                showNotification(result.message + ' Please select another table.', 'error');
+                // Refresh tables from database to get latest status
+                await loadTablesFromDB();
+                renderTablesGrid();
+                selectedTableId = null;
+            } else {
+                showNotification(result.message || 'Failed to create reservation', 'error');
+            }
         }
     } catch (error) {
         console.error('[API] Error saving reservation:', error);
@@ -1190,6 +1219,22 @@ async function handleReservation(e) {
             submitBtn.textContent = originalText;
         }
     }
+}
+
+// Add this helper function to load tables from database
+async function loadTablesFromDB() {
+    try {
+        const response = await fetch('table.php');
+        const result = await response.json();
+        if (result.success && result.data?.tables) {
+            saveTables(result.data.tables);
+            console.log('[API] Loaded', result.data.tables.length, 'tables from database');
+            return result.data.tables;
+        }
+    } catch (error) {
+        console.error('[API] Error loading tables:', error);
+    }
+    return getTables();
 }
 
 // ══════════════════════════════════════════════════════════════

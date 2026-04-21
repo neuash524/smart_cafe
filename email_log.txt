@@ -348,3 +348,455 @@ Welcome to Smart Café
     .container{max-width:600px;margin:0 auto;background:#fff;border-radius:1
 ========================================
 
+========================================
+Time: 2026-04-21 10:08:39
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-21 10:08:41
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-21 10:09:16
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-21 10:09:18
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-21 10:09:49
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-21 10:09:51
+Status: MAIL_FAILED
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;}
+.container{max-width:600px;margin:0 auto;}
+.header{background:#8B4513;color:white;padding:20px;text-align:center;}
+.content{padd
+========================================
+
+========================================
+Time: 2026-04-21 20:58:14
+Status: ATTEMPT
+To: bladin397@gmail.com
+Subject: 🧪 Smart Café Test - 2026-04-21 20:58:14
+Message Preview: ✅ Email Working!
+     This is a test email from your Smart Café system.
+     Time sent: 2026-04-21 20:58:14
+     Your email notifications for reservations and orders will now work!
+========================================
+
+========================================
+Time: 2026-04-21 20:58:17
+Status: SUCCESS
+To: bladin397@gmail.com
+Subject: 🧪 Smart Café Test - 2026-04-21 20:58:14
+Message Preview: ✅ Email Working!
+     This is a test email from your Smart Café system.
+     Time sent: 2026-04-21 20:58:14
+     Your email notifications for reservations and orders will now work!
+========================================
+
+========================================
+Time: 2026-04-21 19:11:18
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:11:21
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:12:53
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Your Table is Ready - Smart Café
+Message Preview: 
+
+Table Ready
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513;
+========================================
+
+========================================
+Time: 2026-04-21 19:12:55
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Your Table is Ready - Smart Café
+Message Preview: 
+
+Table Ready
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513;
+========================================
+
+========================================
+Time: 2026-04-21 19:26:23
+Status: ATTEMPT
+To: madi@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:26:26
+Status: SUCCESS
+To: madi@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:26:27
+Status: ATTEMPT
+To: emily@email.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:26:29
+Status: SUCCESS
+To: emily@email.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:27:21
+Status: ATTEMPT
+To: san@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:27:23
+Status: SUCCESS
+To: san@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:27:28
+Status: ATTEMPT
+To: prab@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:27:30
+Status: SUCCESS
+To: prab@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:27:35
+Status: ATTEMPT
+To: madi@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:27:37
+Status: SUCCESS
+To: madi@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:29:34
+Status: ATTEMPT
+To: aashish@example.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:29:36
+Status: SUCCESS
+To: aashish@example.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:29:39
+Status: ATTEMPT
+To: madi@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:29:42
+Status: SUCCESS
+To: madi@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:29:57
+Status: ATTEMPT
+To: aashish@example.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:29:59
+Status: SUCCESS
+To: aashish@example.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:31:44
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-21 19:31:46
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ❌ Reservation Cancelled - Smart Café
+Message Preview: 
+
+
+
+Reservation Cancelled
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+

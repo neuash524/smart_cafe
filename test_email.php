@@ -1,95 +1,59 @@
 <?php
-/**
- * Test Email Configuration
- * Run this file to test if emails are working
- */
+// test_email.php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-require_once 'email_sender.php';
+echo "<h1>📧 Testing Email System</h1>";
 
-echo "<!DOCTYPE html>
-<html>
-<head>
-    <title>Email Test - Smart Café</title>
-    <style>
-        body { font-family: monospace; padding: 20px; background: #f5f5f5; }
-        .success { color: green; font-weight: bold; }
-        .error { color: red; font-weight: bold; }
-        .section { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; }
-        input, button { padding: 10px; margin: 5px; }
-    </style>
-</head>
-<body>
-    <h1>📧 Smart Café Email Test</h1>
-    
-    <div class='section'>
-        <h2>Test Email Sending</h2>
-        <form method='POST'>
-            <label>Recipient Email:</label>
-            <input type='email' name='test_email' placeholder='your@email.com' required>
-            <button type='submit' name='send_test'>Send Test Email</button>
-        </form>
-    </div>";
+// Check if PHPMailer files exist
+$files = [
+    'PHPMailer-master/src/PHPMailer.php',
+    'PHPMailer-master/src/SMTP.php',
+    'PHPMailer-master/src/Exception.php'
+];
 
-if (isset($_POST['send_test']) && isset($_POST['test_email'])) {
-    $testEmail = $_POST['test_email'];
-    
-    echo "<div class='section'>";
-    echo "<h3>Test Results for: " . htmlspecialchars($testEmail) . "</h3>";
-    
-    // Test 1: Basic email
-    $testMessage = "<!DOCTYPE html>
-    <html>
-    <body>
-        <h2>Smart Café Email Test</h2>
-        <p>This is a test email from your Smart Café system.</p>
-        <p>If you received this, your email configuration is working correctly!</p>
-        <p>Time sent: " . date('Y-m-d H:i:s') . "</p>
-    </body>
-    </html>";
-    
-    $result = sendSmartCafeEmail($testEmail, "🧪 Smart Café Email Test", $testMessage);
-    
-    if ($result) {
-        echo "<p class='success'>✅ Test email sent successfully to " . htmlspecialchars($testEmail) . "</p>";
+echo "<h3>Checking PHPMailer Files:</h3>";
+foreach ($files as $file) {
+    $fullPath = __DIR__ . '/' . $file;
+    if (file_exists($fullPath)) {
+        echo "<p style='color:green'>✅ Found: " . $file . "</p>";
     } else {
-        echo "<p class='error'>❌ Failed to send test email. Check your PHP mail() configuration.</p>";
+        echo "<p style='color:red'>❌ Missing: " . $file . "</p>";
+        echo "<p>Full path tried: " . $fullPath . "</p>";
     }
-    
-    // Show log file
-    if (file_exists('email_log.txt')) {
-        echo "<details>";
-        echo "<summary>View Email Log (last 10 entries)</summary>";
-        $logContent = file_get_contents('email_log.txt');
-        $lines = explode("\n", $logContent);
-        $lastLines = array_slice($lines, -50);
-        echo "<pre style='background:#f0f0f0;padding:10px;overflow:auto;max-height:300px;'>";
-        echo htmlspecialchars(implode("\n", $lastLines));
-        echo "</pre>";
-        echo "</details>";
-    }
-    
-    echo "</div>";
 }
 
-echo "
-    <div class='section'>
-        <h3>Email Configuration Info</h3>
-        <ul>
-            <li><strong>PHP Version:</strong> " . phpversion() . "</li>
-            <li><strong>Mail Function:</strong> " . (function_exists('mail') ? '✅ Available' : '❌ Not available') . "</li>
-            <li><strong>Log File:</strong> " . (file_exists('email_log.txt') ? '✅ Exists' : '❌ Not found') . "</li>
-        </ul>
-    </div>
-    
-    <div class='section'>
-        <h3>Troubleshooting Tips</h3>
-        <ul>
-            <li>For local development (XAMPP/WAMP), email may not work without SMTP configuration</li>
-            <li>For production, configure SMTP settings or use a service like SendGrid, Mailgun, or PHPMailer with Gmail SMTP</li>
-            <li>Check your spam/junk folder for test emails</li>
-            <li>View email_log.txt for detailed send attempts</li>
-        </ul>
-    </div>
-</body>
-</html>";
+// Include email sender
+require_once 'email_sender.php';
+
+echo "<h3>Sending Test Email:</h3>";
+
+// Send to YOUR email address
+$testEmail = "bladin397@gmail.com";  // Your email
+
+$result = sendSmartCafeEmail(
+    $testEmail,
+    "🧪 Smart Café Test - " . date('Y-m-d H:i:s'),
+    "<h2 style='color:#8B4513;'>✅ Email Working!</h2>
+     <p>This is a test email from your Smart Café system.</p>
+     <p><strong>Time sent:</strong> " . date('Y-m-d H:i:s') . "</p>
+     <p>Your email notifications for reservations and orders will now work!</p>"
+);
+
+if ($result) {
+    echo "<p style='color:green;font-size:18px;font-weight:bold;'>✅ SUCCESS! Email sent to {$testEmail}</p>";
+    echo "<p>Check your inbox (and spam folder).</p>";
+} else {
+    echo "<p style='color:red;font-size:18px;font-weight:bold;'>❌ FAILED to send email</p>";
+}
+
+// Show log
+echo "<h3>📋 Email Log:</h3>";
+if (file_exists('email_log.txt')) {
+    echo "<pre style='background:#f0f0f0;padding:10px;max-height:300px;overflow:auto;font-size:11px;'>";
+    echo htmlspecialchars(file_get_contents('email_log.txt'));
+    echo "</pre>";
+} else {
+    echo "<p>No log file yet. Check after sending.</p>";
+}
 ?>

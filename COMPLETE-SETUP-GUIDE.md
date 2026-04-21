@@ -23,10 +23,11 @@ Your complete Smart Café system is ready with ALL code files:
 
 ```
 smart-cafe/
-
-smart-cafe/
-
-│
+├── PHPMailer-master/          ← This is your extracted folder
+│   ├── src/                   ← The src folder is inside
+│   │   ├── PHPMailer.php
+│   │   ├── SMTP.php
+│   │   └── Exception.php
 ├── customer_dashboard.php    ✅ (add PHP header)
 ├── admin_dashboard.php       ✅
 ├── login.php                 ✅
@@ -51,7 +52,8 @@ smart-cafe/
 ├── register.php              ✅
 ├── notifications_api.php     ✅
 ├── users_api.php             ✅
-├── email_sender.php          ⚠️ (fix links)       ✅
+├── email_sender.php    
+├── test_email.php          ✅
 ├── test_connection.php   
 └── img/
     ├── menu/              ← PLACE YOUR 16 IMAGES HERE

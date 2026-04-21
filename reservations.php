@@ -77,10 +77,10 @@ try {
         $pdo->beginTransaction();
         
         try {
-            $table = fetchOne('SELECT * FROM cafe_tables WHERE table_id = ?', [$tableId]);
-            if (!$table || $table['status'] !== 'available') {
-                sendResponse(false, 'Table not available');
-            }
+           $table = fetchOne('SELECT * FROM cafe_tables WHERE table_id = ?', [$tableId]);
+if (!$table || $table['status'] !== 'available') {
+    sendResponse(false, 'Table not available. Please select another table.');
+}
             
             if ($guests > $table['capacity']) {
                 sendResponse(false, "Table only seats {$table['capacity']} guests");
