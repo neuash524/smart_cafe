@@ -800,3 +800,369 @@ body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
 .container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
 ========================================
 
+========================================
+Time: 2026-04-22 11:13:37
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-22 11:13:37
+Status: SMTP_ERROR: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.gmail.com failed: No such host is known. 
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-22 11:19:49
+Status: ATTEMPT
+To: magarpunpunam@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-22 11:19:49
+Status: SMTP_ERROR: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.gmail.com failed: No such host is known. 
+To: magarpunpunam@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-22 13:21:20
+Status: ATTEMPT
+To: bladin397@gmail.com
+Subject: 🧪 Smart Café Test - 2026-04-22 13:21:20
+Message Preview: ✅ Email Working!
+     This is a test email from your Smart Café system.
+     Time sent: 2026-04-22 13:21:20
+     Your email notifications for reservations and orders will now work!
+========================================
+
+========================================
+Time: 2026-04-22 13:21:20
+Status: SMTP_ERROR: SMTP Error: Could not connect to SMTP host. Failed to connect to server SMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo for smtp.gmail.com failed: No such host is known. 
+To: bladin397@gmail.com
+Subject: 🧪 Smart Café Test - 2026-04-22 13:21:20
+Message Preview: ✅ Email Working!
+     This is a test email from your Smart Café system.
+     Time sent: 2026-04-22 13:21:20
+     Your email notifications for reservations and orders will now work!
+========================================
+
+========================================
+Time: 2026-04-22 13:23:29
+Status: ATTEMPT
+To: bladin397@gmail.com
+Subject: 🧪 Smart Café Test - 2026-04-22 13:23:29
+Message Preview: ✅ Email Working!
+     This is a test email from your Smart Café system.
+     Time sent: 2026-04-22 13:23:29
+     Your email notifications for reservations and orders will now work!
+========================================
+
+========================================
+Time: 2026-04-22 13:23:31
+Status: SUCCESS
+To: bladin397@gmail.com
+Subject: 🧪 Smart Café Test - 2026-04-22 13:23:29
+Message Preview: ✅ Email Working!
+     This is a test email from your Smart Café system.
+     Time sent: 2026-04-22 13:23:29
+     Your email notifications for reservations and orders will now work!
+========================================
+
+========================================
+Time: 2026-04-22 11:24:21
+Status: ATTEMPT
+To: magarpunpunam@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-22 11:24:22
+Status: SUCCESS
+To: magarpunpunam@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-22 11:26:07
+Status: ATTEMPT
+To: magarpunpunam@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-22 11:26:09
+Status: SUCCESS
+To: magarpunpunam@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-22 11:28:10
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-22 11:28:12
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-26 18:56:22
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-26 18:56:24
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-26 18:59:48
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-26 18:59:52
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-04-26 18:59:55
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Your Table is Ready - Smart Café
+Message Preview: 
+
+Table Ready
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513;
+========================================
+
+========================================
+Time: 2026-04-26 18:59:58
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Your Table is Ready - Smart Café
+Message Preview: 
+
+Table Ready
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513;
+========================================
+
+========================================
+Time: 2026-04-26 19:01:40
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: 👨‍🍳 Order Being Prepared - ORD-9165
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-04-26 19:01:42
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: 👨‍🍳 Order Being Prepared - ORD-9165
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-04-26 19:02:01
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Order Ready for Pickup - ORD-9165
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-04-26 19:02:05
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Order Ready for Pickup - ORD-9165
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-04-26 19:02:18
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: 🎉 Order Completed - ORD-9165
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-04-26 19:02:19
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: 🎉 Order Completed - ORD-9165
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
