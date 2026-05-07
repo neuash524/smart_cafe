@@ -79,22 +79,6 @@ session_start();
             padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 0.9rem; color: var(--text-secondary);
         }
         .payment-method-section h4 { color: var(--primary); margin-bottom: 0.75rem; }
-        .payment-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem; }
-        .payment-method-option {
-            display: flex; align-items: center; gap: 0.5rem;
-            border: 2px solid #E5D4C1; border-radius: var(--radius-sm);
-            padding: 0.6rem 0.85rem; cursor: pointer; transition: var(--transition);
-            font-size: 0.9rem;
-        }
-        .payment-method-option:has(input:checked) { border-color: var(--primary); background: rgba(139,69,19,0.06); }
-        .card-details .form-group { margin-bottom: 1rem; }
-        .card-details label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.9rem; color: var(--text); }
-        .card-details input {
-            width: 100%; padding: 0.75rem 1rem; border: 2px solid #E5D4C1;
-            border-radius: var(--radius-sm); font-size: 1rem; transition: var(--transition);
-        }
-        .card-details input:focus { outline: none; border-color: var(--primary); }
-        .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
 
         /* ── Payment / Reservation / Queue Success overlays ── */
         #paymentSuccess, #reservationSuccess, #queueSuccess {
@@ -133,6 +117,28 @@ session_start();
             border: 2px dashed var(--accent) !important; cursor: pointer;
         }
         .add-to-cart-locked:hover { background: var(--accent-light) !important; }
+
+        /* Payment method box - Pay at Counter only */
+        .payment-method-box {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .payment-method-box .method-icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+        }
+        .info-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            color: #92400e;
+        }
 
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.9); }

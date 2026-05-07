@@ -1350,7 +1350,14 @@ function handleCheckout() {
     openPaymentModal();
 }
 
+// Updated openPaymentModal function - Credit Card REMOVED
 function openPaymentModal() {
+    if (!isLoggedIn()) { requireLogin('checkout'); return; }
+    if (cart.length === 0) {
+        showNotification('Your cart is empty.', 'error');
+        return;
+    }
+    
     const session = getSession();
     if (!session) return;
     
@@ -1362,10 +1369,11 @@ function openPaymentModal() {
     modal.innerHTML = `
         <div style="background:#fff;border-radius:16px;padding:2rem;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid #E5D4C1;">
-                <h2 style="color:#8B4513;">💳 Payment</h2>
+                <h2 style="color:#8B4513;">💵 Complete Your Order</h2>
                 <button onclick="document.getElementById('paymentModal').remove()" style="background:none;border:none;font-size:1.5rem;cursor:pointer;">✕</button>
             </div>
             
+            <!-- Order Summary -->
             <div style="background:#faf3eb;border-radius:8px;padding:1rem;margin-bottom:1.25rem;">
                 <h4 style="color:#8B4513;margin-bottom:0.75rem;">Order Summary</h4>
                 ${cart.map(i => `
@@ -1380,34 +1388,48 @@ function openPaymentModal() {
                 </div>
             </div>
             
+            <!-- Customer Info -->
             <div style="background:rgba(139,69,19,0.07);border-radius:8px;padding:0.75rem 1rem;margin-bottom:1.25rem;">
                 <p>👤 <strong>${escapeHtml(session.full_name)}</strong> | ${escapeHtml(session.email)}</p>
-                <p style="font-size:0.85rem;color:#6B4E3D;">User ID: ${session.user_id}</p>
+                <p style="font-size:0.85rem;">📞 ${escapeHtml(session.phone || 'No phone')}</p>
             </div>
             
+            <!-- Payment Method - Pay at Counter ONLY -->
             <div class="payment-method-section">
                 <h4 style="color:#8B4513;margin-bottom:0.75rem;">Payment Method</h4>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:1rem;">
-                    <label style="display:flex;align-items:center;gap:0.5rem;border:2px solid #E5D4C1;border-radius:8px;padding:0.6rem;cursor:pointer;">
-                        <input type="radio" name="payMethod" value="credit_card" checked> 💳 Credit Card
-                    </label>
-                    <label style="display:flex;align-items:center;gap:0.5rem;border:2px solid #E5D4C1;border-radius:8px;padding:0.6rem;cursor:pointer;">
-                        <input type="radio" name="payMethod" value="cash"> 💵 Pay at Counter
-                    </label>
+                <div class="payment-method-box" style="background:#ecfdf5;border:2px solid #10b981;border-radius:8px;padding:1rem;margin-bottom:1rem;">
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <span style="font-size:1.5rem;">💵</span>
+                        <div>
+                            <strong style="color:#065f46;">Pay at Counter</strong>
+                            <p style="font-size:0.8rem;color:#065f46;margin:0;">No payment required now</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             
+            <!-- Info Box -->
+            <div class="info-box" style="background:#fef3c7;border-left:4px solid #f59e0b;border-radius:8px;padding:0.75rem 1rem;margin:1rem 0;">
+                <p style="font-size:0.85rem;color:#92400e;margin:0;">
+                    📋 <strong>How it works:</strong><br>
+                    1. Complete this order<br>
+                    2. Admin will prepare your food<br>
+                    3. Pay when you pick up at the counter
+                </p>
+            </div>
+            
             <button class="btn btn-primary" onclick="processPayment(${total})" style="width:100%;background:#8B4513;color:#fff;border:none;padding:0.85rem;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;">
-                Pay $${total.toFixed(2)} Now
+                🍽️ Place Order - Pay at Counter ($${total.toFixed(2)})
             </button>
-            <p style="font-size:0.75rem;color:#9b8070;text-align:center;margin-top:0.75rem;">You'll be notified when admin updates your order status.</p>
         </div>
     `;
     document.body.appendChild(modal);
 }
 
+// Updated processPayment function - Credit Card REMOVED (always cash)
 async function processPayment(total) {
-    const method = document.querySelector('input[name="payMethod"]:checked')?.value || 'credit_card';
+    // Always use 'cash' as payment method - Credit Card removed
+    const method = 'cash';
     const session = getSession();
     
     if (!session) {
@@ -1417,6 +1439,7 @@ async function processPayment(total) {
     
     const userId = session.user_id;
     console.log('[Payment] Using user_id from session:', userId);
+    console.log('[Payment] Payment method (always cash):', method);
     
     const orderData = {
         user_id: userId,
@@ -1487,6 +1510,7 @@ async function processPayment(total) {
     }
 }
 
+// Updated showPaymentSuccess function
 function showPaymentSuccess(order) {
     const total = order.items.reduce((s, i) => s + i.unit_price * i.quantity, 0);
     
@@ -1496,19 +1520,20 @@ function showPaymentSuccess(order) {
     modal.innerHTML = `
         <div style="background:#fff;border-radius:16px;padding:2.5rem;max-width:440px;width:100%;text-align:center;">
             <div style="font-size:3.5rem;margin-bottom:1rem;">✅</div>
-            <h2 style="color:#8B4513;margin-bottom:0.5rem;">Payment Successful!</h2>
+            <h2 style="color:#8B4513;margin-bottom:0.5rem;">Order Placed!</h2>
             <div style="background:#d1fae5;border:1px solid #10b981;border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0;">
                 <p style="font-weight:700;color:#065f46;">Order Reference: ${order.order_ref}</p>
-                <p>Amount: <strong>$${total.toFixed(2)}</strong></p>
-                <p style="font-size:0.8rem;margin-top:0.5rem;">You will be notified when admin updates your order status!</p>
+                <p>Amount to pay at counter: <strong>$${total.toFixed(2)}</strong></p>
+                <p style="font-size:0.8rem;margin-top:0.5rem;">You will be notified when your order is ready!</p>
             </div>
-            <p style="font-size:0.85rem;color:#9b8070;margin:0.75rem 0;">🍳 Your order has been sent to the kitchen!</p>
-            <button class="btn btn-primary" onclick="document.getElementById('paymentSuccess').remove()" style="background:#8B4513;color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:8px;cursor:pointer;">Done</button>
+            <div style="background:#fef3c7;border-radius:8px;padding:0.75rem;margin:0.75rem 0;">
+                <p style="font-size:0.85rem;color:#92400e;">💡 <strong>Note:</strong> Please pay at the counter when you pick up your order.</p>
+            </div>
+            <button class="btn btn-primary" onclick="document.getElementById('paymentSuccess').remove()" style="background:#8B4513;color:#fff;border:none;padding:0.75rem 1.5rem;border-radius:8px;cursor:pointer;">Continue</button>
         </div>
     `;
     document.body.appendChild(modal);
 }
-
 // ══════════════════════════════════════════════════════════════
 // EVENT LISTENERS & HELPERS
 // ══════════════════════════════════════════════════════════════

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2026 at 07:57 PM
+-- Generation Time: May 07, 2026 at 12:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -158,7 +158,140 @@ INSERT INTO `activity_logs` (`log_id`, `user_id`, `action_type`, `table_name`, `
 (60, NULL, 'UPDATE', 'cafe_tables', 4, 'Table Table 4 status changed from occupied to available', '::1', '2026-04-02 17:54:24'),
 (61, NULL, 'UPDATE', 'cafe_tables', 5, 'Table Table 5 status changed from reserved to available', '::1', '2026-04-02 17:54:28'),
 (62, 5, 'CREATE', 'reservations', 16, 'New reservation for Prab Shiram on 2026-04-02', NULL, '2026-04-02 17:55:02'),
-(63, 5, 'CREATE', 'reservations', 16, 'Reservation request created for Prab Shiram on 2026-04-02 at 22:54 (pending approval)', '::1', '2026-04-02 17:55:02');
+(63, 5, 'CREATE', 'reservations', 16, 'Reservation request created for Prab Shiram on 2026-04-02 at 22:54 (pending approval)', '::1', '2026-04-02 17:55:02'),
+(64, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from occupied to available', '::1', '2026-04-05 09:02:28'),
+(65, NULL, 'UPDATE', 'cafe_tables', 3, 'Table Table 3 status changed from occupied to available', '::1', '2026-04-05 09:02:30'),
+(66, NULL, 'UPDATE', 'cafe_tables', 4, 'Table Table 4 status changed from reserved to available', '::1', '2026-04-05 09:02:31'),
+(67, 6, 'CREATE', 'reservations', 17, 'New reservation for Baibab Bista on 2026-04-05', NULL, '2026-04-05 09:12:31'),
+(68, 6, 'CREATE', 'reservations', 17, 'Reservation request created for Baibab Bista on 2026-04-05 at 16:12 (pending approval)', '::1', '2026-04-05 09:12:31'),
+(69, NULL, 'UPDATE', 'cafe_tables', 4, 'Table Table 4 status changed from reserved to occupied', '::1', '2026-04-05 09:15:16'),
+(70, 6, 'CREATE', 'reservations', 18, 'New reservation for Baibab Bista on 2026-04-05', NULL, '2026-04-05 20:44:41'),
+(71, 6, 'CREATE', 'reservations', 18, 'Reservation request created for Baibab Bista on 2026-04-05 at 02:48 (pending approval)', '::1', '2026-04-05 20:44:41'),
+(72, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from reserved to occupied', '::1', '2026-04-05 20:48:56'),
+(73, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from occupied to available', '::1', '2026-04-13 11:01:32'),
+(74, NULL, 'UPDATE', 'cafe_tables', 4, 'Table Table 4 status changed from occupied to available', '::1', '2026-04-13 11:01:34'),
+(75, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from available to occupied', '::1', '2026-04-14 00:23:20'),
+(76, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from available to occupied', '::1', '2026-04-14 00:23:27'),
+(77, 7, 'CREATE', 'reservations', 19, 'New reservation for Madi Kumar on 2026-04-14', NULL, '2026-04-14 00:26:34'),
+(78, 7, 'CREATE', 'reservations', 19, 'Reservation request created for Madi Kumar on 2026-04-14 at 07:30 (pending approval)', '::1', '2026-04-14 00:26:34'),
+(79, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from occupied to available', '::1', '2026-04-14 11:06:50'),
+(80, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from occupied to available', '::1', '2026-04-14 11:06:51'),
+(81, 10, 'CREATE', 'reservations', 20, 'New reservation for Aashish Neupane on 2026-04-16', NULL, '2026-04-15 21:45:39'),
+(82, 10, 'CREATE', 'reservations', 20, 'Reservation request created for Aashish Neupane on 2026-04-16 at 13:00 (pending approval)', '::1', '2026-04-15 21:45:39'),
+(83, 10, 'CREATE', 'reservations', 21, 'New reservation for Aashish Neupane on 2026-04-17', NULL, '2026-04-15 22:14:34'),
+(84, NULL, 'UPDATE', 'reservations', 21, 'Reservation #21 status changed from pending to confirmed', '::1', '2026-04-15 22:15:19'),
+(85, NULL, 'UPDATE', 'reservations', 21, 'Reservation #21 status changed from confirmed to confirmed', '::1', '2026-04-15 22:19:53'),
+(86, NULL, 'UPDATE', 'reservations', 21, 'Reservation #21 status changed from confirmed to confirmed', '::1', '2026-04-15 22:24:39'),
+(87, 10, 'CREATE', 'reservations', 22, 'New reservation for Aashish Neupane on 2026-04-24', NULL, '2026-04-15 22:36:44'),
+(88, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from reserved to available', '::1', '2026-04-15 22:37:04'),
+(89, NULL, 'UPDATE', 'cafe_tables', 3, 'Table Table 3 status changed from reserved to available', '::1', '2026-04-15 22:37:05'),
+(90, 10, 'CREATE', 'reservations', 23, 'New reservation for Aashish Neupane on 2026-04-17', NULL, '2026-04-15 23:21:02'),
+(91, NULL, 'UPDATE', 'reservations', 23, 'Reservation #23 status changed from pending to confirmed', '::1', '2026-04-15 23:21:46'),
+(92, NULL, 'UPDATE', 'cafe_tables', 3, 'Table Table 3 status changed from reserved to available', '::1', '2026-04-15 23:27:16'),
+(93, NULL, 'UPDATE', 'cafe_tables', 4, 'Table Table 4 status changed from reserved to available', '::1', '2026-04-15 23:27:17'),
+(94, NULL, 'UPDATE', 'reservations', 19, 'Reservation #19 status changed from cancelled to confirmed', '::1', '2026-04-15 23:27:42'),
+(95, 7, 'CREATE', 'reservations', 24, 'New reservation for Madi Kumar on 2026-04-16', NULL, '2026-04-16 08:15:34'),
+(96, NULL, 'UPDATE', 'cafe_tables', 3, 'Table Table 3 status changed from reserved to available', '::1', '2026-04-16 08:16:15'),
+(97, 1, 'CREATE', 'reservations', 25, 'New reservation for Madi Kumar on 2026-04-16', NULL, '2026-04-16 08:16:57'),
+(98, NULL, 'CREATE', 'reservations', 26, 'New reservation for Pukar Neupane on 2026-04-19', NULL, '2026-04-18 20:57:14'),
+(99, NULL, 'UPDATE', 'reservations', 26, 'Reservation #26 status changed from pending to confirmed', '::1', '2026-04-18 20:58:07'),
+(100, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from reserved to available', '::1', '2026-04-18 20:59:27'),
+(101, NULL, 'UPDATE', 'cafe_tables', 3, 'Table Table 3 status changed from reserved to available', '::1', '2026-04-18 20:59:29'),
+(102, NULL, 'UPDATE', 'reservations', 22, 'Reservation #22 status changed from pending to cancelled', '::1', '2026-04-18 20:59:46'),
+(103, 10, 'CREATE', 'reservations', 27, 'New reservation for Aashish Neupane on 2026-04-19', NULL, '2026-04-18 21:01:36'),
+(104, NULL, 'UPDATE', 'reservations', 27, 'Reservation #27 status changed from pending to confirmed', '::1', '2026-04-18 21:02:28'),
+(105, 10, 'CREATE', 'reservations', 28, 'New reservation for Aashish Neupane on 2026-04-18', NULL, '2026-04-18 21:20:19'),
+(106, NULL, 'UPDATE', 'reservations', 28, 'Reservation #28 status changed from pending to confirmed', '::1', '2026-04-18 21:38:19'),
+(107, NULL, 'UPDATE', 'reservations', 28, 'Reservation #28 status changed from confirmed to completed', '::1', '2026-04-18 21:38:25'),
+(108, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from reserved to occupied', '::1', '2026-04-18 21:38:27'),
+(109, NULL, 'UPDATE', 'reservations', 25, 'Reservation #25 status changed from pending to confirmed', '::1', '2026-04-18 21:45:58'),
+(110, NULL, 'UPDATE', 'cafe_tables', 3, 'Table Table 3 status changed from reserved to occupied', '::1', '2026-04-18 21:46:05'),
+(111, NULL, 'UPDATE', 'cafe_tables', 3, 'Table Table 3 status changed from occupied to available', '::1', '2026-04-18 21:46:23'),
+(112, 1, 'CREATE', 'orders', 15, 'Order #ORD-0416 placed by Admin User — $13.99', '::1', '2026-04-18 21:50:26'),
+(113, 10, 'CREATE', 'queue', 17, 'Aashish Neupane joined queue - Position #2, Party of 2', '::1', '2026-04-19 08:20:03'),
+(114, NULL, 'DELETE', 'queue', 17, 'Queue entry removed for Aashish Neupane (Party of 2)', '::1', '2026-04-19 08:20:46'),
+(115, 10, 'CREATE', 'queue', 18, 'Aashish Neupane joined queue - Position #2, Party of 2', '::1', '2026-04-19 08:21:51'),
+(116, NULL, 'DELETE', 'queue', 18, 'Queue entry removed for Aashish Neupane (Party of 2)', '::1', '2026-04-19 08:22:48'),
+(117, 10, 'CREATE', 'queue', 19, 'Aashish Neupane joined queue - Position #2, Party of 2', '::1', '2026-04-19 08:23:15'),
+(118, 10, 'CREATE', 'orders', 16, 'Order #ORD-9454 placed by Aashish Neupane — $12.99', '::1', '2026-04-19 08:58:17'),
+(119, 10, 'CREATE', 'orders', 17, 'Order #ORD-0307 placed by Aashish Neupane — $14.99', '::1', '2026-04-19 09:07:43'),
+(120, 10, 'CREATE', 'orders', 18, 'Order #ORD-8925 placed by Aashish Neupane — $6.99', '::1', '2026-04-19 09:10:53'),
+(121, 10, 'CREATE', 'orders', 19, 'Order #ORD-4987 placed by Aashish Neupane — $12.99', '::1', '2026-04-19 09:31:29'),
+(122, 10, 'CREATE', 'orders', 20, 'Order #ORD-7903 placed by Aashish Neupane — $21.98', '::1', '2026-04-19 09:42:51'),
+(123, NULL, 'UPDATE', 'orders', 20, 'Order #ORD-7903 status changed from pending to preparing', '::1', '2026-04-19 12:11:34'),
+(124, NULL, 'UPDATE', 'orders', 20, 'Order #ORD-7903 status changed from preparing to ready', '::1', '2026-04-19 12:11:38'),
+(125, NULL, 'UPDATE', 'orders', 20, 'Order #ORD-7903 status changed from ready to completed', '::1', '2026-04-19 12:11:45'),
+(126, 10, 'CREATE', 'orders', 21, 'Order #ORD-5210 placed by Aashish Neupane — $7.99', '::1', '2026-04-20 20:49:58'),
+(127, 10, 'CREATE', 'orders', 22, 'Order #ORD-5091 placed by Aashish Neupane — $12.99', '::1', '2026-04-20 20:56:35'),
+(128, NULL, 'UPDATE', 'reservations', 23, 'Reservation #23 status changed from confirmed to confirmed', '::1', '2026-04-21 10:08:41'),
+(129, NULL, 'UPDATE', 'reservations', 28, 'Reservation #28 status changed from completed to confirmed', '::1', '2026-04-21 10:09:18'),
+(130, NULL, 'UPDATE', 'reservations', 28, 'Reservation #28 status changed from confirmed to confirmed', '::1', '2026-04-21 10:09:51'),
+(131, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from reserved to available', '::1', '2026-04-21 19:09:52'),
+(132, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from reserved to available', '::1', '2026-04-21 19:09:54'),
+(133, 10, 'CREATE', 'reservations', 29, 'New reservation for Aashish Neupane on 2026-04-21', NULL, '2026-04-21 19:10:40'),
+(134, NULL, 'UPDATE', 'reservations', 29, 'Reservation #29 status changed from pending to confirmed', '::1', '2026-04-21 19:11:21'),
+(135, NULL, 'DELETE', 'queue', 19, 'Queue entry removed for Aashish Neupane (Party of 2)', '::1', '2026-04-21 19:11:46'),
+(136, 10, 'CREATE', 'queue', 20, 'Aashish Neupane joined queue - Position #2, Party of 2', '::1', '2026-04-21 19:12:36'),
+(137, NULL, 'UPDATE', 'queue', 20, 'Queue entry for Aashish Neupane seated (Party of 2)', '::1', '2026-04-21 19:12:53'),
+(138, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from reserved to occupied', '::1', '2026-04-21 19:12:55'),
+(139, NULL, 'UPDATE', 'reservations', 29, 'Reservation #29 status changed from confirmed to completed', '::1', '2026-04-21 19:12:55'),
+(140, 10, 'CREATE', 'orders', 23, 'Order #ORD-9165 placed by Aashish Neupane — $12.99', '::1', '2026-04-21 19:20:39'),
+(141, 12, 'CREATE', 'reservations', 30, 'New reservation for San Watson on 2026-04-22', NULL, '2026-04-21 19:21:55'),
+(142, 5, 'CREATE', 'reservations', 31, 'New reservation for Prab Shiram on 2026-04-21', NULL, '2026-04-21 19:24:13'),
+(143, 7, 'CREATE', 'reservations', 32, 'New reservation for Madi Kumar on 2026-04-22', NULL, '2026-04-21 19:25:43'),
+(144, NULL, 'UPDATE', 'reservations', 32, 'Reservation #32 status changed from pending to cancelled', '::1', '2026-04-21 19:26:26'),
+(145, NULL, 'UPDATE', 'reservations', 3, 'Reservation #3 status changed from pending to cancelled', '::1', '2026-04-21 19:26:29'),
+(146, NULL, 'UPDATE', 'reservations', 30, 'Reservation #30 status changed from pending to cancelled', '::1', '2026-04-21 19:27:23'),
+(147, NULL, 'UPDATE', 'reservations', 31, 'Reservation #31 status changed from pending to cancelled', '::1', '2026-04-21 19:27:30'),
+(148, NULL, 'UPDATE', 'reservations', 24, 'Reservation #24 status changed from pending to cancelled', '::1', '2026-04-21 19:27:37'),
+(149, NULL, 'UPDATE', 'cafe_tables', 7, 'Table Table 7 status changed from available to occupied', '::1', '2026-04-21 19:27:45'),
+(150, NULL, 'UPDATE', 'cafe_tables', 7, 'Table Table 7 status changed from occupied to available', '::1', '2026-04-21 19:27:53'),
+(151, 7, 'CREATE', 'reservations', 33, 'New reservation for Madi Kumar on 2026-04-22', NULL, '2026-04-21 19:28:52'),
+(152, NULL, 'UPDATE', 'cafe_tables', 3, 'Table Table 3 status changed from reserved to available', '::1', '2026-04-21 19:29:21'),
+(153, NULL, 'UPDATE', 'reservations', 9, 'Reservation #9 status changed from pending to cancelled', '::1', '2026-04-21 19:29:36'),
+(154, NULL, 'UPDATE', 'reservations', 33, 'Reservation #33 status changed from pending to cancelled', '::1', '2026-04-21 19:29:42'),
+(155, NULL, 'UPDATE', 'reservations', 8, 'Reservation #8 status changed from pending to cancelled', '::1', '2026-04-21 19:29:59'),
+(156, 10, 'CREATE', 'reservations', 34, 'New reservation for Aashish Neupane on 2026-04-21', NULL, '2026-04-21 19:31:11'),
+(157, NULL, 'UPDATE', 'reservations', 34, 'Reservation #34 status changed from pending to cancelled', '::1', '2026-04-21 19:31:46'),
+(158, NULL, 'UPDATE', 'cafe_tables', 5, 'Table Table 5 status changed from available to occupied', '::1', '2026-04-21 19:31:51'),
+(159, NULL, 'UPDATE', 'cafe_tables', 5, 'Table Table 5 status changed from occupied to available', '::1', '2026-04-21 19:32:06'),
+(160, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from available to available', '::1', '2026-04-21 19:32:09'),
+(161, NULL, 'UPDATE', 'cafe_tables', 6, 'Table Table 6 status changed from occupied to available', '::1', '2026-04-21 21:13:43'),
+(162, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from available to occupied', '::1', '2026-04-21 21:21:31'),
+(163, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from available to occupied', '::1', '2026-04-21 21:21:33'),
+(164, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from occupied to available', '::1', '2026-04-21 21:22:00'),
+(165, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from occupied to available', '::1', '2026-04-21 21:22:01'),
+(166, 10, 'CREATE', 'reservations', 35, 'New reservation for Aashish Neupane on 2026-04-22', NULL, '2026-04-22 11:12:50'),
+(167, NULL, 'UPDATE', 'reservations', 35, 'Reservation #35 status changed from pending to confirmed', '::1', '2026-04-22 11:13:37'),
+(168, 13, 'CREATE', 'reservations', 36, 'New reservation for Punam william on 2026-04-23', NULL, '2026-04-22 11:19:23'),
+(169, NULL, 'UPDATE', 'reservations', 36, 'Reservation #36 status changed from pending to confirmed', '::1', '2026-04-22 11:19:49'),
+(170, NULL, 'UPDATE', 'reservations', 36, 'Reservation #36 status changed from confirmed to confirmed', '::1', '2026-04-22 11:24:22'),
+(171, 1, 'CREATE', 'reservations', 37, 'New reservation for Punam william on 2026-04-22', NULL, '2026-04-22 11:25:52'),
+(172, NULL, 'UPDATE', 'reservations', 37, 'Reservation #37 status changed from pending to confirmed', '::1', '2026-04-22 11:26:09'),
+(173, 10, 'CREATE', 'reservations', 38, 'New reservation for Aashish Neupane on 2026-04-22', NULL, '2026-04-22 11:27:38'),
+(174, NULL, 'UPDATE', 'reservations', 38, 'Reservation #38 status changed from pending to confirmed', '::1', '2026-04-22 11:28:12'),
+(175, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from reserved to available', '::1', '2026-04-22 11:28:36'),
+(176, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from reserved to available', '::1', '2026-04-22 11:28:38'),
+(177, NULL, 'UPDATE', 'cafe_tables', 3, 'Table Table 3 status changed from reserved to available', '::1', '2026-04-22 11:28:39'),
+(178, NULL, 'UPDATE', 'cafe_tables', 4, 'Table Table 4 status changed from reserved to available', '::1', '2026-04-22 11:28:41'),
+(179, 10, 'CREATE', 'reservations', 39, 'New reservation for Aashish Neupane on 2026-04-27', NULL, '2026-04-26 18:55:23'),
+(180, 10, 'CREATE', 'queue', 21, 'Aashish Neupane joined queue - Position #2, Party of 2', '::1', '2026-04-26 18:55:42'),
+(181, NULL, 'UPDATE', 'reservations', 39, 'Reservation #39 status changed from pending to confirmed', '::1', '2026-04-26 18:56:24'),
+(182, 10, 'CREATE', 'reservations', 40, 'New reservation for Aashish Neupane on 2026-04-26', NULL, '2026-04-26 18:59:24'),
+(183, NULL, 'UPDATE', 'reservations', 40, 'Reservation #40 status changed from pending to confirmed', '::1', '2026-04-26 18:59:52'),
+(184, NULL, 'UPDATE', 'queue', 21, 'Queue entry for Aashish Neupane seated (Party of 2)', '::1', '2026-04-26 18:59:55'),
+(185, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from reserved to occupied', '::1', '2026-04-26 18:59:59'),
+(186, NULL, 'UPDATE', 'reservations', 40, 'Reservation #40 status changed from confirmed to completed', '::1', '2026-04-26 18:59:59'),
+(187, 1, 'CREATE', 'orders', 24, 'Order #ORD-3487 placed by Admin User — $8.99', '::1', '2026-04-26 19:00:55'),
+(188, NULL, 'UPDATE', 'orders', 23, 'Order #ORD-9165 status changed from pending to preparing', '::1', '2026-04-26 19:01:40'),
+(189, NULL, 'UPDATE', 'orders', 23, 'Order #ORD-9165 status changed from preparing to ready', '::1', '2026-04-26 19:02:01'),
+(190, NULL, 'UPDATE', 'orders', 23, 'Order #ORD-9165 status changed from ready to completed', '::1', '2026-04-26 19:02:18'),
+(191, NULL, 'UPDATE', 'cafe_tables', 1, 'Table Table 1 status changed from reserved to available', '::1', '2026-05-03 16:42:12'),
+(192, NULL, 'UPDATE', 'cafe_tables', 2, 'Table Table 2 status changed from occupied to available', '::1', '2026-05-03 16:42:13'),
+(193, 10, 'CREATE', 'queue', 22, 'Aashish Neupane joined queue - Position #2, Party of 2', '::1', '2026-05-03 21:21:43'),
+(194, 10, 'CREATE', 'queue', 23, 'Aashish Neupane joined queue - Position #3, Party of 3', '::1', '2026-05-03 21:21:52'),
+(195, 10, 'CREATE', 'orders', 25, 'Order #ORD-4022 placed by Aashish Neupane — $13.99', '::1', '2026-05-06 11:41:40'),
+(196, 10, 'CREATE', 'orders', 26, 'Order #ORD-8181 placed by Aashish Neupane — $24.98', '::1', '2026-05-06 11:42:36');
 
 -- --------------------------------------------------------
 
@@ -192,14 +325,14 @@ CREATE TABLE `cafe_tables` (
 --
 
 INSERT INTO `cafe_tables` (`table_id`, `table_number`, `capacity`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Table 1', 2, 'occupied', '2026-03-27 08:40:04', '2026-04-01 11:20:28'),
-(2, 'Table 2', 2, 'available', '2026-03-27 08:40:04', '2026-04-01 11:15:55'),
-(3, 'Table 3', 4, 'occupied', '2026-03-27 08:40:04', '2026-04-02 17:46:31'),
-(4, 'Table 4', 4, 'reserved', '2026-03-27 08:40:04', '2026-04-02 17:55:02'),
-(5, 'Table 5', 6, 'available', '2026-03-27 08:40:04', '2026-04-02 17:54:28'),
-(6, 'Table 6', 6, 'occupied', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
-(7, 'Table 7', 8, 'available', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
-(8, 'Table 8', 4, 'available', '2026-03-27 08:40:04', '2026-03-27 08:40:04');
+(1, 'Table 1', 2, 'available', '2026-03-27 08:40:04', '2026-05-03 16:42:12'),
+(2, 'Table 2', 2, 'available', '2026-03-27 08:40:04', '2026-05-03 16:42:13'),
+(3, 'Table 3', 4, 'available', '2026-03-27 08:40:04', '2026-04-22 11:28:39'),
+(4, 'Table 4', 4, 'available', '2026-03-27 08:40:04', '2026-04-22 11:28:41'),
+(5, 'Table 5', 6, 'available', '2026-03-27 08:40:04', '2026-04-21 19:32:06'),
+(6, 'Table 6', 6, 'available', '2026-03-27 08:40:04', '2026-04-21 21:13:43'),
+(7, 'Table 7', 8, 'available', '2026-03-27 08:40:04', '2026-04-21 19:27:53'),
+(8, 'Table 8', 4, 'available', '2026-03-27 08:40:04', '2026-04-21 19:26:23');
 
 -- --------------------------------------------------------
 
@@ -310,7 +443,64 @@ INSERT INTO `notifications` (`notification_id`, `user_id`, `notification_type`, 
 (7, 4, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-02 at 21:40:00 has been confirmed by the admin.', 0, '2026-04-02 17:39:33'),
 (8, 4, 'order', '👨‍🍳 Order Being Prepared', 'Your order #ORD-6170 is now being prepared by our kitchen staff.', 0, '2026-04-02 17:39:41'),
 (9, 4, 'queue', '✅ Your Table is Ready!', 'Neymar Jr, your table is now ready. Please proceed to the host station.', 0, '2026-04-02 17:46:31'),
-(10, 5, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-02 at 22:54:00 has been confirmed by the admin.', 0, '2026-04-02 17:56:00');
+(10, 5, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-02 at 22:54:00 has been confirmed by the admin.', 1, '2026-04-02 17:56:00'),
+(11, 6, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-05 at 16:12:00 has been confirmed by the admin.', 1, '2026-04-05 09:14:54'),
+(12, 6, 'queue', '✅ Your Table is Ready!', 'Baibab Bista, your table is now ready. Please proceed to the host station.', 1, '2026-04-05 09:15:16'),
+(13, 6, 'order', '👨‍🍳 Order Being Prepared', 'Your order #ORD-5566 is now being prepared by our kitchen staff.', 1, '2026-04-05 20:47:19'),
+(14, 6, 'order', '✅ Order Ready for Pickup!', 'Your order #ORD-5566 is ready for pickup. Please come to the counter.', 1, '2026-04-05 20:47:24'),
+(15, 6, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-05 at 02:48:00 has been confirmed by the admin.', 1, '2026-04-05 20:47:57'),
+(16, 6, 'queue', '✅ Your Table is Ready!', 'Baibab Bista, your table is now ready. Please proceed to the host station.', 1, '2026-04-05 20:48:55'),
+(17, 7, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-14 at 07:30:00 has been confirmed by the admin.', 1, '2026-04-14 00:27:28'),
+(18, 7, 'order', '👨‍🍳 Order Being Prepared', 'Your order #ORD-5043 is now being prepared by our kitchen staff.', 1, '2026-04-14 00:31:10'),
+(19, 7, 'order', '✅ Order Ready for Pickup!', 'Your order #ORD-5043 is ready for pickup. Please come to the counter.', 1, '2026-04-14 00:31:13'),
+(20, 7, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-04-14 at 07:30:00 has been cancelled by the admin.', 1, '2026-04-14 20:17:06'),
+(21, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-16 at 13:00:00 has been confirmed by the admin.', 1, '2026-04-15 21:46:27'),
+(22, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-16 at 13:00:00 has been confirmed by the admin.', 1, '2026-04-15 21:46:37'),
+(23, 10, 'reservation', 'Reservation Confirmed!', 'Your reservation for 2026-04-16 at 13:00:00 has been confirmed.', 1, '2026-04-15 21:53:45'),
+(24, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-17 at 01:15:00 has been confirmed.', 1, '2026-04-15 22:15:19'),
+(25, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-17 at 01:15:00 has been confirmed.', 1, '2026-04-15 22:19:53'),
+(26, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-17 at 01:15:00 has been confirmed.', 1, '2026-04-15 22:24:39'),
+(27, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-17 at 01:24:00 has been confirmed.', 1, '2026-04-15 23:21:46'),
+(28, 7, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-14 at 07:30:00 has been confirmed.', 1, '2026-04-15 23:27:42'),
+(29, 10, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-04-24 at 06:36:00 has been cancelled.', 1, '2026-04-18 20:59:46'),
+(30, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-19 at 10:01:00 has been confirmed.', 1, '2026-04-18 21:02:28'),
+(31, 10, 'order', '👨‍🍳 Order Being Prepared', 'Your order #ORD-6581 is now being prepared by our kitchen staff.', 1, '2026-04-18 21:05:35'),
+(32, 10, 'order', '✅ Order Ready for Pickup!', 'Your order #ORD-6581 is ready for pickup. Please come to the counter.', 1, '2026-04-18 21:05:40'),
+(33, 10, 'order', '🎉 Order Completed', 'Your order #ORD-6581 has been completed. Thank you for dining with us!', 1, '2026-04-18 21:05:46'),
+(34, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-18 at 00:21:00 has been confirmed.', 1, '2026-04-18 21:38:19'),
+(35, 10, 'queue', '✅ Your Table is Ready!', 'Aashish Neupane, your table is now ready. Please proceed to the host station.', 1, '2026-04-18 21:38:27'),
+(36, 10, 'order', '👨‍🍳 Order Being Prepared', 'Your order #ORD-4044 is now being prepared by our kitchen staff.', 1, '2026-04-18 21:41:34'),
+(37, 10, 'order', '✅ Order Ready for Pickup!', 'Your order #ORD-4044 is ready for pickup. Please come to the counter.', 1, '2026-04-18 21:41:41'),
+(38, 10, 'order', '🎉 Order Completed', 'Your order #ORD-4044 has been completed. Thank you for dining with us!', 1, '2026-04-18 21:41:44'),
+(39, 1, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-16 at 14:20:00 has been confirmed.', 1, '2026-04-18 21:45:58'),
+(40, 10, 'order', '👨‍🍳 Order Being Prepared', 'Your order #ORD-7903 is now being prepared by our kitchen staff.', 1, '2026-04-19 12:11:36'),
+(41, 10, 'order', '✅ Order Ready for Pickup!', 'Your order #ORD-7903 is ready for pickup. Please come to the counter.', 1, '2026-04-19 12:11:40'),
+(42, 10, 'order', '🎉 Order Completed', 'Your order #ORD-7903 has been completed. Thank you for dining with us!', 1, '2026-04-19 12:11:47'),
+(43, 11, 'general', '🎉 Welcome to Smart Café!', 'Thank you for joining us! You can now reserve tables, order food, and join the queue.', 1, '2026-04-20 21:22:09'),
+(44, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-17 at 01:24:00 has been confirmed.', 1, '2026-04-21 10:08:41'),
+(45, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-18 at 00:21:00 has been confirmed.', 1, '2026-04-21 10:09:18'),
+(46, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-18 at 00:21:00 has been confirmed.', 1, '2026-04-21 10:09:51'),
+(47, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-21 at 02:15:00 has been confirmed.', 1, '2026-04-21 19:11:21'),
+(48, 10, 'queue', '✅ Your Table is Ready!', 'Aashish Neupane, your table is now ready at your reserved table Table 1. Please proceed to the host station.', 1, '2026-04-21 19:12:55'),
+(49, 7, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-04-22 at 21:25:00 has been cancelled.', 0, '2026-04-21 19:26:26'),
+(50, 12, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-04-22 at 15:30:00 has been cancelled.', 0, '2026-04-21 19:27:23'),
+(51, 5, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-04-21 at 02:29:00 has been cancelled.', 0, '2026-04-21 19:27:30'),
+(52, 7, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-04-16 at 14:20:00 has been cancelled.', 0, '2026-04-21 19:27:37'),
+(53, 2, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-02-25 at 10:31:00 has been cancelled.', 0, '2026-04-21 19:29:36'),
+(54, 7, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-04-22 at 21:33:00 has been cancelled.', 0, '2026-04-21 19:29:42'),
+(55, 2, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-02-26 at 10:25:00 has been cancelled.', 0, '2026-04-21 19:29:59'),
+(56, 10, 'reservation', '❌ Reservation Cancelled', 'Your reservation for 2026-04-21 at 02:31:00 has been cancelled.', 1, '2026-04-21 19:31:46'),
+(57, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-22 at 13:12:00 has been confirmed.', 1, '2026-04-22 11:13:37'),
+(58, 13, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-23 at 17:19:00 has been confirmed.', 0, '2026-04-22 11:19:49'),
+(59, 13, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-23 at 17:19:00 has been confirmed.', 0, '2026-04-22 11:24:22'),
+(60, 1, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-22 at 15:25:00 has been confirmed.', 0, '2026-04-22 11:26:09'),
+(61, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-22 at 18:30:00 has been confirmed.', 1, '2026-04-22 11:28:12'),
+(62, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-27 at 18:00:00 has been confirmed.', 1, '2026-04-26 18:56:24'),
+(63, 10, 'reservation', '✅ Reservation Confirmed!', 'Your reservation for 2026-04-26 at 21:00:00 has been confirmed.', 1, '2026-04-26 18:59:52'),
+(64, 10, 'queue', '✅ Your Table is Ready!', 'Aashish Neupane, your table is now ready at your reserved table Table 2. Please proceed to the host station.', 1, '2026-04-26 18:59:59'),
+(65, 10, 'order', '👨‍🍳 Order Being Prepared', 'Your order #ORD-9165 is now being prepared by our kitchen staff.', 1, '2026-04-26 19:01:42'),
+(66, 10, 'order', '✅ Order Ready for Pickup!', 'Your order #ORD-9165 is ready for pickup. Please come to the counter.', 1, '2026-04-26 19:02:05'),
+(67, 10, 'order', '🎉 Order Completed', 'Your order #ORD-9165 has been completed. Thank you for dining with us!', 1, '2026-04-26 19:02:19');
 
 -- --------------------------------------------------------
 
@@ -347,7 +537,25 @@ INSERT INTO `orders` (`order_id`, `user_id`, `reservation_id`, `customer_name`, 
 (5, NULL, NULL, 'Neymar Jr', '+45 12345678', 'pre_order', 'completed', 10.99, 'paid', 'cash', NULL, '2026-03-31 21:48:21', '2026-03-31 21:50:03', 'ORD-005'),
 (6, NULL, NULL, 'Prab Shiram', '+45 23456789', 'pre_order', 'completed', 4.50, 'paid', 'cash', NULL, '2026-03-31 22:37:03', '2026-03-31 22:38:08', 'ORD-006'),
 (7, NULL, NULL, 'Prab Shiram', '+45 23456789', 'pre_order', 'completed', 15.99, 'paid', 'cash', NULL, '2026-03-31 22:53:12', '2026-03-31 22:55:53', 'ORD-007'),
-(8, 4, NULL, 'Neymar Jr', '+45 12345678', 'pre_order', 'preparing', 5.00, 'paid', 'cash', NULL, '2026-04-02 17:38:25', '2026-04-02 17:39:41', 'ORD-6170');
+(8, 4, NULL, 'Neymar Jr', '+45 12345678', 'pre_order', 'preparing', 5.00, 'paid', 'cash', NULL, '2026-04-02 17:38:25', '2026-04-02 17:39:41', 'ORD-6170'),
+(9, 6, NULL, 'Baibab Bista', '+45 66666664', 'pre_order', 'pending', 9.99, 'paid', 'cash', NULL, '2026-04-05 09:12:43', '2026-04-05 09:12:43', 'ORD-3568'),
+(10, 6, NULL, 'Baibab Bista', '+45 66666664', 'pre_order', 'ready', 11.99, 'paid', 'cash', NULL, '2026-04-05 20:45:20', '2026-04-05 20:47:24', 'ORD-5566'),
+(11, 7, NULL, 'Madi Kumar', '12345678', 'pre_order', 'ready', 15.99, 'paid', 'cash', NULL, '2026-04-14 00:30:13', '2026-04-14 00:31:13', 'ORD-5043'),
+(12, 1, NULL, 'Admin User', '+1234567890', 'pre_order', 'pending', 4.50, 'paid', 'cash', NULL, '2026-04-18 21:04:13', '2026-04-18 21:04:13', 'ORD-0531'),
+(13, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'completed', 5.00, 'paid', 'credit_card', NULL, '2026-04-18 21:05:07', '2026-04-18 21:05:44', 'ORD-6581'),
+(14, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'completed', 12.99, 'paid', 'credit_card', NULL, '2026-04-18 21:40:03', '2026-04-18 21:41:42', 'ORD-4044'),
+(15, 1, NULL, 'Admin User', '+1234567890', 'pre_order', 'pending', 13.99, 'paid', 'cash', NULL, '2026-04-18 21:50:26', '2026-04-18 21:50:26', 'ORD-0416'),
+(16, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'pending', 12.99, 'paid', 'credit_card', NULL, '2026-04-19 08:58:17', '2026-04-19 08:58:17', 'ORD-9454'),
+(17, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'pending', 14.99, 'paid', 'credit_card', NULL, '2026-04-19 09:07:43', '2026-04-19 09:07:43', 'ORD-0307'),
+(18, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'pending', 6.99, 'paid', 'credit_card', NULL, '2026-04-19 09:10:53', '2026-04-19 09:10:53', 'ORD-8925'),
+(19, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'pending', 12.99, 'paid', 'credit_card', NULL, '2026-04-19 09:31:29', '2026-04-19 09:31:29', 'ORD-4987'),
+(20, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'completed', 21.98, 'paid', 'credit_card', NULL, '2026-04-19 09:42:51', '2026-04-19 12:11:45', 'ORD-7903'),
+(21, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'pending', 7.99, 'paid', 'credit_card', NULL, '2026-04-20 20:49:58', '2026-04-20 20:49:58', 'ORD-5210'),
+(22, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'pending', 12.99, 'paid', 'credit_card', NULL, '2026-04-20 20:56:34', '2026-04-20 20:56:34', 'ORD-5091'),
+(23, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'completed', 12.99, 'paid', 'credit_card', NULL, '2026-04-21 19:20:39', '2026-04-26 19:02:18', 'ORD-9165'),
+(24, 1, NULL, 'Admin User', '+1234567890', 'pre_order', 'pending', 8.99, 'paid', 'cash', NULL, '2026-04-26 19:00:55', '2026-04-26 19:00:55', 'ORD-3487'),
+(25, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'pending', 13.99, 'paid', 'credit_card', NULL, '2026-05-06 11:41:40', '2026-05-06 11:41:40', 'ORD-4022'),
+(26, 10, NULL, 'Aashish Neupane', '+4591437762', 'pre_order', 'pending', 24.98, 'paid', 'cash', NULL, '2026-05-06 11:42:36', '2026-05-06 11:42:36', 'ORD-8181');
 
 -- --------------------------------------------------------
 
@@ -378,7 +586,27 @@ INSERT INTO `order_items` (`order_item_id`, `order_id`, `item_id`, `item_name`, 
 (6, 5, 4, 'Avocado Toast', 1, 10.99, 10.99),
 (7, 6, 10, 'Cappuccino', 1, 4.50, 4.50),
 (8, 7, 8, 'Grilled Chicken', 1, 15.99, 15.99),
-(9, 8, 11, 'Iced Latte', 1, 5.00, 5.00);
+(9, 8, 11, 'Iced Latte', 1, 5.00, 5.00),
+(10, 9, 3, 'French Toast', 1, 9.99, 9.99),
+(11, 10, 5, 'Caesar Salad', 1, 11.99, 11.99),
+(12, 11, 8, 'Grilled Chicken', 1, 15.99, 15.99),
+(13, 12, 10, 'Cappuccino', 1, 4.50, 4.50),
+(14, 13, 11, 'Iced Latte', 1, 5.00, 5.00),
+(15, 14, 2, 'Eggs Benedict', 1, 12.99, 12.99),
+(16, 15, 6, 'Club Sandwich', 1, 13.99, 13.99),
+(17, 16, 2, 'Eggs Benedict', 1, 12.99, 12.99),
+(18, 17, 7, 'Beef Burger', 1, 14.99, 14.99),
+(19, 18, 13, 'Chocolate Cake', 1, 6.99, 6.99),
+(20, 19, 2, 'Eggs Benedict', 1, 12.99, 12.99),
+(21, 20, 1, 'Classic Pancakes', 1, 8.99, 8.99),
+(22, 20, 2, 'Eggs Benedict', 1, 12.99, 12.99),
+(23, 21, 14, 'Tiramisu', 1, 7.99, 7.99),
+(24, 22, 2, 'Eggs Benedict', 1, 12.99, 12.99),
+(25, 23, 2, 'Eggs Benedict', 1, 12.99, 12.99),
+(26, 24, 1, 'Classic Pancakes', 1, 8.99, 8.99),
+(27, 25, 6, 'Club Sandwich', 1, 13.99, 13.99),
+(28, 26, 5, 'Caesar Salad', 1, 11.99, 11.99),
+(29, 26, 2, 'Eggs Benedict', 1, 12.99, 12.99);
 
 -- --------------------------------------------------------
 
@@ -409,7 +637,25 @@ INSERT INTO `payments` (`payment_id`, `order_id`, `reservation_id`, `amount`, `p
 (5, 5, NULL, 10.99, 'cash', 'TXN-005-20260331', 'completed', '2026-03-31 21:48:21'),
 (6, 6, NULL, 4.50, 'cash', 'TXN-006-20260331', 'completed', '2026-03-31 22:37:03'),
 (7, 7, NULL, 15.99, 'cash', 'TXN-007-20260331', 'completed', '2026-03-31 22:53:12'),
-(8, 8, NULL, 5.00, 'cash', NULL, 'completed', '2026-04-02 17:38:25');
+(8, 8, NULL, 5.00, 'cash', NULL, 'completed', '2026-04-02 17:38:25'),
+(9, 9, NULL, 9.99, 'cash', NULL, 'completed', '2026-04-05 09:12:43'),
+(10, 10, NULL, 11.99, 'cash', NULL, 'completed', '2026-04-05 20:45:20'),
+(11, 11, NULL, 15.99, 'cash', NULL, 'completed', '2026-04-14 00:30:13'),
+(12, 12, NULL, 4.50, 'cash', NULL, 'completed', '2026-04-18 21:04:13'),
+(13, 13, NULL, 5.00, 'credit_card', NULL, 'completed', '2026-04-18 21:05:07'),
+(14, 14, NULL, 12.99, 'credit_card', NULL, 'completed', '2026-04-18 21:40:03'),
+(15, 15, NULL, 13.99, 'cash', NULL, 'completed', '2026-04-18 21:50:26'),
+(16, 16, NULL, 12.99, 'credit_card', NULL, 'completed', '2026-04-19 08:58:17'),
+(17, 17, NULL, 14.99, 'credit_card', NULL, 'completed', '2026-04-19 09:07:43'),
+(18, 18, NULL, 6.99, 'credit_card', NULL, 'completed', '2026-04-19 09:10:53'),
+(19, 19, NULL, 12.99, 'credit_card', NULL, 'completed', '2026-04-19 09:31:29'),
+(20, 20, NULL, 21.98, 'credit_card', NULL, 'completed', '2026-04-19 09:42:51'),
+(21, 21, NULL, 7.99, 'credit_card', NULL, 'completed', '2026-04-20 20:49:58'),
+(22, 22, NULL, 12.99, 'credit_card', NULL, 'completed', '2026-04-20 20:56:34'),
+(23, 23, NULL, 12.99, 'credit_card', NULL, 'completed', '2026-04-21 19:20:39'),
+(24, 24, NULL, 8.99, 'cash', NULL, 'completed', '2026-04-26 19:00:55'),
+(25, 25, NULL, 13.99, 'credit_card', NULL, 'completed', '2026-05-06 11:41:40'),
+(26, 26, NULL, 24.98, 'cash', NULL, 'completed', '2026-05-06 11:42:36');
 
 -- --------------------------------------------------------
 
@@ -456,7 +702,15 @@ INSERT INTO `queue` (`queue_id`, `user_id`, `customer_name`, `customer_phone`, `
 (3, NULL, 'Neymar Jr', '+45 12345678', 3, 'seated', 1, 15, '2026-03-31 21:24:07', NULL, '2026-04-01 11:00:36'),
 (4, NULL, 'Prab Shiram', '+45 23456789', 2, 'seated', 2, 30, '2026-03-31 22:33:15', NULL, '2026-04-01 10:58:59'),
 (5, NULL, 'Neymar Jr', '+45 12345678', 4, 'seated', 1, 15, '2026-04-01 11:19:56', NULL, '2026-04-01 11:20:28'),
-(12, 4, 'Neymar Jr', '+45 12345678', 4, 'seated', 1, 15, '2026-04-02 17:46:00', NULL, '2026-04-02 17:46:31');
+(12, 4, 'Neymar Jr', '+45 12345678', 4, 'seated', 1, 15, '2026-04-02 17:46:00', NULL, '2026-04-02 17:46:31'),
+(13, 6, 'Baibab Bista', '+45 66666664', 3, 'seated', 1, 15, '2026-04-05 09:12:55', NULL, '2026-04-05 09:15:16'),
+(14, 6, 'Baibab Bista', '+45 66666664', 2, 'seated', 1, 15, '2026-04-05 20:45:54', NULL, '2026-04-05 20:48:55'),
+(15, 1, 'Madi Kumar', '12345678', 6, 'waiting', 1, 15, '2026-04-14 00:32:29', NULL, NULL),
+(16, 10, 'Aashish Neupane', '+4591437762', 2, 'seated', 2, 30, '2026-04-18 21:01:47', NULL, '2026-04-18 21:38:25'),
+(20, 10, 'Aashish Neupane', '+4591437762', 2, 'seated', 2, 30, '2026-04-21 19:12:36', NULL, '2026-04-21 19:12:53'),
+(21, 10, 'Aashish Neupane', '+4591437762', 2, 'seated', 2, 30, '2026-04-26 18:55:42', NULL, '2026-04-26 18:59:55'),
+(22, 10, 'Aashish Neupane', '+4591437762', 2, 'waiting', 2, 30, '2026-05-03 21:21:43', NULL, NULL),
+(23, 10, 'Aashish Neupane', '+4591437762', 3, 'waiting', 3, 45, '2026-05-03 21:21:52', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -487,20 +741,44 @@ CREATE TABLE `reservations` (
 INSERT INTO `reservations` (`reservation_id`, `user_id`, `customer_name`, `customer_email`, `customer_phone`, `table_id`, `reservation_date`, `reservation_time`, `number_of_guests`, `special_requests`, `status`, `created_at`, `updated_at`) VALUES
 (1, 2, 'Aashish Neupane', 'aashish@example.com', '+1234567891', 1, '2026-02-24', '18:00:00', 2, 'Window seat preferred', 'confirmed', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
 (2, NULL, 'Sarah Johnson', 'sarah@email.com', '+1234567890', 3, '2026-02-24', '19:00:00', 4, '', 'confirmed', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
-(3, NULL, 'Emily Davis', 'emily@email.com', '+1234567892', 5, '2026-02-24', '12:00:00', 3, 'Vegetarian please', 'pending', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
+(3, NULL, 'Emily Davis', 'emily@email.com', '+1234567892', 5, '2026-02-24', '12:00:00', 3, 'Vegetarian please', 'cancelled', '2026-03-27 08:40:04', '2026-04-21 19:26:27'),
 (4, NULL, 'James Wilson', 'james@email.com', '+1234567893', 2, '2026-02-25', '13:30:00', 2, '', 'confirmed', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
 (5, NULL, 'Mike Chen', 'mike@email.com', '+1234567894', 7, '2026-02-25', '18:30:00', 6, 'Birthday celebration', 'confirmed', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
 (6, 2, 'Aashish Neupane', 'aashish@example.com', '+1234567891', 5, '2026-02-26', '10:11:00', 2, '', 'cancelled', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
 (7, 2, 'Shyam', 'aashish@example.com', '+1234567891', 2, '2026-03-06', '10:20:00', 6, '', 'cancelled', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
-(8, 2, 'Ramesh', 'aashish@example.com', '+1234567891', 1, '2026-02-26', '10:25:00', 1, '', 'pending', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
-(9, 2, 'Aashish Neupane', 'aashish@example.com', '+1234567891', 1, '2026-02-25', '10:31:00', 1, '', 'pending', '2026-03-27 08:40:04', '2026-03-27 08:40:04'),
+(8, 2, 'Ramesh', 'aashish@example.com', '+1234567891', 1, '2026-02-26', '10:25:00', 1, '', 'cancelled', '2026-03-27 08:40:04', '2026-04-21 19:29:57'),
+(9, 2, 'Aashish Neupane', 'aashish@example.com', '+1234567891', 1, '2026-02-25', '10:31:00', 1, '', 'cancelled', '2026-03-27 08:40:04', '2026-04-21 19:29:34'),
 (10, NULL, 'Hari Oli', 'hario@gmail.com', '+45 66666666', 1, '2026-03-27', '09:48:00', 1, '', 'confirmed', '2026-03-27 08:42:33', '2026-03-27 08:42:33'),
 (11, NULL, 'Hari Oli', 'hario@gmail.com', '+45 66666666', 3, '2026-03-27', '12:30:00', 2, '', 'confirmed', '2026-03-27 09:24:07', '2026-03-27 09:24:07'),
 (12, NULL, 'Neymar Jr', 'neymar@gmail.com', '+45 12345678', 3, '2026-04-01', '08:30:00', 3, '', 'confirmed', '2026-03-31 21:23:45', '2026-03-31 21:23:45'),
 (13, NULL, 'Prab Shiram', 'prab@gmail.com', '+45 23456789', 1, '2026-04-02', '05:30:00', 2, '', 'confirmed', '2026-03-31 22:31:59', '2026-04-01 10:57:48'),
 (14, 4, 'Neymar Jr', 'neymar@gmail.com', '+45 12345678', 5, '2026-04-01', '20:30:00', 4, '', 'confirmed', '2026-04-01 11:17:43', '2026-04-01 11:18:56'),
 (15, 4, 'Neymar Jr', 'neymar@gmail.com', '+45 12345678', 3, '2026-04-02', '21:40:00', 4, '', 'completed', '2026-04-02 17:37:51', '2026-04-02 17:46:30'),
-(16, 5, 'Prab Shiram', 'prab@gmail.com', '+45 23456789', 4, '2026-04-02', '22:54:00', 4, '', 'confirmed', '2026-04-02 17:55:02', '2026-04-02 17:56:00');
+(16, 5, 'Prab Shiram', 'prab@gmail.com', '+45 23456789', 4, '2026-04-02', '22:54:00', 4, '', 'confirmed', '2026-04-02 17:55:02', '2026-04-02 17:56:00'),
+(17, 6, 'Baibab Bista', 'baibab@gmail.com', '+45 66666664', 4, '2026-04-05', '16:12:00', 3, '', 'completed', '2026-04-05 09:12:31', '2026-04-05 09:15:16'),
+(18, 6, 'Baibab Bista', 'baibab@gmail.com', '+45 66666664', 1, '2026-04-05', '02:48:00', 2, '', 'completed', '2026-04-05 20:44:41', '2026-04-05 20:48:55'),
+(19, 7, 'Madi Kumar', 'madi@gmail.com', '12345678', 5, '2026-04-14', '07:30:00', 5, '', 'confirmed', '2026-04-14 00:26:34', '2026-04-15 23:27:40'),
+(20, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 3, '2026-04-16', '13:00:00', 4, '', 'confirmed', '2026-04-15 21:45:39', '2026-04-15 21:53:45'),
+(21, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 2, '2026-04-17', '01:15:00', 2, '', 'confirmed', '2026-04-15 22:14:34', '2026-04-15 22:24:37'),
+(22, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 4, '2026-04-24', '06:36:00', 4, '', 'cancelled', '2026-04-15 22:36:44', '2026-04-18 20:59:44'),
+(23, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 3, '2026-04-17', '01:24:00', 3, '', 'confirmed', '2026-04-15 23:21:02', '2026-04-21 10:08:39'),
+(24, 7, 'Madi Kumar', 'madi@gmail.com', '12345678', 3, '2026-04-16', '14:20:00', 4, '', 'cancelled', '2026-04-16 08:15:34', '2026-04-21 19:27:35'),
+(25, 1, 'Madi Kumar', 'madi@gmail.com', '12345678', 3, '2026-04-16', '14:20:00', 4, '', 'confirmed', '2026-04-16 08:16:57', '2026-04-18 21:45:56'),
+(26, NULL, 'Pukar Neupane', 'puk@gmail.com', '+45 12345677', 2, '2026-04-19', '16:00:00', 2, '', 'confirmed', '2026-04-18 20:57:14', '2026-04-18 20:58:05'),
+(27, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 1, '2026-04-19', '10:01:00', 2, '', 'confirmed', '2026-04-18 21:01:36', '2026-04-18 21:02:26'),
+(28, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 2, '2026-04-18', '00:21:00', 2, '', 'confirmed', '2026-04-18 21:20:19', '2026-04-21 10:09:49'),
+(29, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 1, '2026-04-21', '02:15:00', 2, '', 'completed', '2026-04-21 19:10:40', '2026-04-21 19:12:55'),
+(30, 12, 'San Watson', 'san@gmail.com', '+4591332263', 7, '2026-04-22', '15:30:00', 3, '', 'cancelled', '2026-04-21 19:21:55', '2026-04-21 19:27:21'),
+(31, 5, 'Prab Shiram', 'prab@gmail.com', '+45 23456789', 4, '2026-04-21', '02:29:00', 3, '', 'cancelled', '2026-04-21 19:24:13', '2026-04-21 19:27:28'),
+(32, 7, 'Madi Kumar', 'madi@gmail.com', '12345678', 8, '2026-04-22', '21:25:00', 4, '', 'cancelled', '2026-04-21 19:25:43', '2026-04-21 19:26:23'),
+(33, 7, 'Madi Kumar', 'madi@gmail.com', '12345678', 3, '2026-04-22', '21:33:00', 3, '', 'cancelled', '2026-04-21 19:28:52', '2026-04-21 19:29:39'),
+(34, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 5, '2026-04-21', '02:31:00', 5, '', 'cancelled', '2026-04-21 19:31:11', '2026-04-21 19:31:44'),
+(35, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 3, '2026-04-22', '13:12:00', 3, '', 'confirmed', '2026-04-22 11:12:50', '2026-04-22 11:13:37'),
+(36, 13, 'Punam william', 'magarpunpunam@gmail.com', '+4566666666', 1, '2026-04-23', '17:19:00', 2, '', 'confirmed', '2026-04-22 11:19:23', '2026-04-22 11:24:21'),
+(37, 1, 'Punam william', 'magarpunpunam@gmail.com', '+4566666666', 2, '2026-04-22', '15:25:00', 2, '', 'confirmed', '2026-04-22 11:25:52', '2026-04-22 11:26:07'),
+(38, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 4, '2026-04-22', '18:30:00', 4, '', 'confirmed', '2026-04-22 11:27:38', '2026-04-22 11:28:09'),
+(39, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 1, '2026-04-27', '18:00:00', 2, 'Quite Environment', 'confirmed', '2026-04-26 18:55:23', '2026-04-26 18:56:21'),
+(40, 10, 'Aashish Neupane', 'neu.ash56@gmail.com', '+4591437762', 2, '2026-04-26', '21:00:00', 2, '', 'completed', '2026-04-26 18:59:24', '2026-04-26 18:59:59');
 
 --
 -- Triggers `reservations`
@@ -570,11 +848,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `email`, `password_hash`, `full_name`, `phone`, `user_type`, `created_at`, `last_login`, `is_active`) VALUES
-(1, 'admin@smartcafe.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin User', '+1234567890', 'admin', '2026-03-27 08:40:04', NULL, 1),
+(1, 'admin@smartcafe.com', '$2y$10$Ow6OFGM3To7ye4A0aUXJpe2bP6QJpyIKRNmKHFJcx53myt82/uW52', 'Admin User', '+1234567890', 'admin', '2026-03-27 08:40:04', '2026-05-03 16:42:02', 1),
 (2, 'aashish@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Aashish Neupane', '+1234567891', 'customer', '2026-03-27 08:40:04', NULL, 1),
 (3, 'hario@gmail.com', '$2y$10$8jErS2sX9KDAfZxkRsWykuWSdIBiurKzDpryZjYaN/P5SI9FipEnC', 'Hari Oli', '+45 66666666', 'customer', '2026-03-27 08:41:55', '2026-03-27 09:28:19', 1),
 (4, 'neymar@gmail.com', '$2y$10$zMs.IFayfvnOeISK01awI.wiGkMJcnnR1xlEHQ9XdqdPrPRwenfaa', 'Neymar Jr', '+45 12345678', 'customer', '2026-03-31 21:22:55', '2026-04-02 17:40:22', 1),
-(5, 'prab@gmail.com', '$2y$10$wlKKzF4pHUP9FynjTi5N6upVuCCy6zXRe.JuDJKCuAA70bOKVjovC', 'Prab Shiram', '+45 23456789', 'customer', '2026-03-31 22:31:29', '2026-04-02 17:56:14', 1);
+(5, 'prab@gmail.com', '$2y$10$wlKKzF4pHUP9FynjTi5N6upVuCCy6zXRe.JuDJKCuAA70bOKVjovC', 'Prab Shiram', '+45 23456789', 'customer', '2026-03-31 22:31:29', '2026-04-21 19:22:57', 1),
+(6, 'baibab@gmail.com', '$2y$10$eZCydBCTsDAaypBvhhGbj.RQPWPeGhhwqpGcParpIAQdDosq3amrG', 'Baibab Bista', '+45 66666664', 'customer', '2026-04-05 09:11:42', '2026-04-14 12:47:24', 1),
+(7, 'madi@gmail.com', '$2y$10$1G5UdpNFh0/PrF5NlBK8nOn19C4ZubEvJN6VWaBGgR33g1vnK5Y.m', 'Madi Kumar', '12345678', 'customer', '2026-04-14 00:25:25', '2026-04-21 19:28:07', 1),
+(8, 'b@gmail.com', '$2y$10$xuHX7eosaGxiqGBGfYxSQe0okZVfjr93.VdK6cpQRkVs9n9kFnE2.', 'hhhhh bbbbb', 'hhhhhhh', 'customer', '2026-04-14 20:00:45', NULL, 1),
+(9, 'gautam@gmail.com', '$2y$10$P6dbiiyFJsR/GBCSilKAfOpysuNPWHDSBfjX830ptV0cxJOanqQGG', 'Gautam Regmi', '91437762', 'customer', '2026-04-14 20:10:08', NULL, 1),
+(10, 'neu.ash56@gmail.com', '$2y$10$KUIu2NJlomy75TZSuxAW4OHF4AdwAABpR83Df0CgkkxjoADKVuDL2', 'Aashish Neupane', '+4591437762', 'customer', '2026-04-15 21:44:26', '2026-05-06 11:41:21', 1),
+(11, 'bladin397@gmail.com', '$2y$10$T7Ggf/wys9GjisDbe6U1juQWOhKokdPQIw/3rdTnbsZcEyiP5i3pG', 'Bin Ladin', '+4522334455', 'customer', '2026-04-20 21:22:07', '2026-04-20 21:30:06', 1),
+(12, 'san@gmail.com', '$2y$10$PyXV6CxdX6nydM3ruaLyp.R8ecchtD5l.UzeOfM/3OYwabBFSlXNi', 'San Watson', '+4591332263', 'customer', '2026-04-21 19:00:54', '2026-04-21 19:20:54', 1),
+(13, 'magarpunpunam@gmail.com', '$2y$10$pPkcL50hfO//2HoxlBWnaOIzg04wFdhK80IZTBdspjeq6HARrvTc.', 'Punam william', '+4566666666', 'customer', '2026-04-22 11:18:45', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -712,7 +998,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `activity_logs`
 --
 ALTER TABLE `activity_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=197;
 
 --
 -- AUTO_INCREMENT for table `cafe_tables`
@@ -736,43 +1022,43 @@ ALTER TABLE `menu_items`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `queue`
 --
 ALTER TABLE `queue`
-  MODIFY `queue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `queue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
