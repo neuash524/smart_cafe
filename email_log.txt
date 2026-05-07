@@ -1166,3 +1166,145 @@ body{font-family:Arial,sans-serif;background:#f5f0ea;}
 .header{background:#8B4513
 ========================================
 
+========================================
+Time: 2026-05-07 20:20:55
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-05-07 20:20:59
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Reservation Confirmed - Smart Café
+Message Preview: 
+
+
+
+Reservation Confirmed
+
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidd
+========================================
+
+========================================
+Time: 2026-05-07 20:21:45
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Your Table is Ready - Smart Café
+Message Preview: 
+
+Table Ready
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513;
+========================================
+
+========================================
+Time: 2026-05-07 20:21:48
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Your Table is Ready - Smart Café
+Message Preview: 
+
+Table Ready
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513;
+========================================
+
+========================================
+Time: 2026-05-07 20:23:56
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: 👨‍🍳 Order Being Prepared - ORD-5238
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-05-07 20:23:59
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: 👨‍🍳 Order Being Prepared - ORD-5238
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-05-07 20:24:02
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: ✅ Order Ready for Pickup - ORD-5238
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-05-07 20:24:04
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: ✅ Order Ready for Pickup - ORD-5238
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-05-07 20:24:07
+Status: ATTEMPT
+To: neu.ash56@gmail.com
+Subject: 🎉 Order Completed - ORD-5238
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
+========================================
+Time: 2026-05-07 20:24:09
+Status: SUCCESS
+To: neu.ash56@gmail.com
+Subject: 🎉 Order Completed - ORD-5238
+Message Preview: 
+
+Order Update
+
+body{font-family:Arial,sans-serif;background:#f5f0ea;}
+.container{max-width:600px;margin:20px auto;background:#fff;border-radius:16px;overflow:hidden;}
+.header{background:#8B4513
+========================================
+
